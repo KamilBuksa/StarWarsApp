@@ -1,0 +1,5 @@
+export enum FILE_STATUS {
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
+  PENDING = 'PENDING',
+}

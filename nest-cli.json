@@ -1,0 +1,32 @@
+{
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "src",
+    "compilerOptions": {
+        "assets": [
+            {
+                "include": "i18n/**/*",
+                "watchAssets": true
+            },
+            {
+                "include": "views/emails/**/*.hbs",
+                "outDir": "dist/",
+                "watchAssets": true
+            }
+        ],
+        "plugins": [
+            {
+                "name": "@nestjs/swagger/dist/plugin",
+                "options": {
+                    "dtoFileNameSuffix": [
+                        ".entity.ts",
+                        ".dto.ts",
+                        ".model.ts"
+                    ],
+                    "controllerFileNameSuffix": [
+                        ".controller.ts"
+                    ]
+                }
+            }
+        ]
+    }
+}
