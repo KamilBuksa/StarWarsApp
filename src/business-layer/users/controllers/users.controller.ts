@@ -5,7 +5,7 @@ import {
   Get,
   Put,
   Req,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -20,9 +20,7 @@ import {
 } from '../../../models/api.swagger.model';
 import { LanguageHeadersModel } from '../../i18n/model/language-headers.model';
 import { UpdateUserDTO } from '../dtos/request/update.user.dto';
-import {
-  CurrentUserResponseDTO
-} from '../dtos/response/user.res.dto';
+import { CurrentUserResponseDTO } from '../dtos/response/user.res.dto';
 import {
   UserUpdateAdminResponseDTO,
   UserUpdateResponseDTO,
@@ -34,11 +32,10 @@ import { AccessGuard } from '../../../guards/access.guard';
 @ApiTags('users')
 @Controller('/users')
 export class UsersController {
-  constructor(private readonly _userService: UserService) { }
+  constructor(private readonly _userService: UserService) {}
 
   @ApiOperation({
-    summary:
-      'Update profile,',
+    summary: 'Update profile,',
   })
   @ApiSwaggerModel.ApiResponseWithExtraModule(UserUpdateResponseDTO)
   @ApiBody({ type: UpdateUserDTO })
@@ -72,7 +69,7 @@ export class UsersController {
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('current')
   @ApiResponseArrayWithDescription(
-    [CurrentUserResponseDTO,],
+    [CurrentUserResponseDTO],
     'Response for current user ',
   )
   async getCurrentUser(
@@ -80,6 +77,4 @@ export class UsersController {
   ): Promise<CurrentUserResponseDTO> {
     return this._userService.getCurrentUser(req.user);
   }
-
-
 }

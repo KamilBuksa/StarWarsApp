@@ -35,10 +35,7 @@ export class ManyMailingDataDTO {
 export class MailingDataRes {
   email: string;
   html: string;
-  constructor(
-    email: string,
-    html: string,
-  ) {
+  constructor(email: string, html: string) {
     this.email = email;
     this.html = html;
   }

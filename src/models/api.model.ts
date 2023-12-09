@@ -48,7 +48,6 @@ export namespace ApiModel {
     query?: string | undefined;
   }
 
-
   export class PaginationMeta {
     current_page: number;
     last_page: number;
@@ -109,7 +108,6 @@ export namespace ApiModel {
   export type RequestWithUser = {
     user: UserEntity;
   } & Request;
-
 
   export const emptyResponse = () => {
     return {

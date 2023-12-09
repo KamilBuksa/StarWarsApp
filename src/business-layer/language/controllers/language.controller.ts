@@ -23,7 +23,7 @@ import { AccessGuard } from '../../../guards/access.guard';
 @ApiTags('Language')
 @Controller('/language')
 export class LanguageController {
-  constructor(private readonly _languageService: LanguageService) { }
+  constructor(private readonly _languageService: LanguageService) {}
 
   @ApiOperation({
     summary: 'Get user language',

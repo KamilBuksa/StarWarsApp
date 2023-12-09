@@ -5,8 +5,6 @@ export enum APPROVE_STATUS {
   REJECTED = 'REJECTED',
 }
 export class ApproveDTO {
-  @ApiSwaggerModel.ApiEnum([
-    ...Object.values(APPROVE_STATUS),
-  ])
+  @ApiSwaggerModel.ApiEnum([...Object.values(APPROVE_STATUS)])
   status: APPROVE_STATUS;
 }

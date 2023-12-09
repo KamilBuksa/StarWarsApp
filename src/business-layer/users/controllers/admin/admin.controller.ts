@@ -7,7 +7,7 @@ import {
   Put,
   Query,
   Req,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../../../../data-access-layer/user-entity/entities/enums/user.roles';
@@ -20,13 +20,11 @@ import { ApiSwaggerModel } from '../../../../models/api.swagger.model';
 import { IdParamDTO } from '../../../auth/dtos/request/id.dto';
 import { LanguageHeadersModel } from '../../../i18n/model/language-headers.model';
 import { AdminUsersQuery } from '../../dtos/request/get.user.dto';
-import {
-  UserStatusDTO,
-} from '../../dtos/request/update.user.dto';
+import { UserStatusDTO } from '../../dtos/request/update.user.dto';
 import { UserListAdminResponseDTO } from '../../dtos/response/user-list.res.dto';
 import {
   UserAdminResponseDTO,
-  UserDetailsAdminResponseDTO
+  UserDetailsAdminResponseDTO,
 } from '../../dtos/response/user.res.dto';
 import {
   UserUpdateAdminResponseDTO,
@@ -42,7 +40,7 @@ export class AdminsController {
   constructor(
     private readonly _adminService: AdminService,
     private readonly _userService: UserService,
-  ) { }
+  ) {}
 
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @ApiOperation({ summary: 'Change user status' })
@@ -61,7 +59,9 @@ export class AdminsController {
   @Get('')
   getAll(
     @Query() query: AdminUsersQuery,
-  ): Promise<ApiModel.PaginatedResponse<UserListAdminResponseDTO | UserAdminResponseDTO>> {
+  ): Promise<
+    ApiModel.PaginatedResponse<UserListAdminResponseDTO | UserAdminResponseDTO>
+  > {
     return this._adminService.findAllUsers(query);
   }
 
@@ -77,8 +77,7 @@ export class AdminsController {
   }
 
   @ApiOperation({
-    summary:
-      'Update user profile,',
+    summary: 'Update user profile,',
   })
   @ApiSwaggerModel.ApiResponseWithExtraModule(UserUpdateAdminResponseDTO)
   @ApiBody({ type: UserUpdateAdminResponseDTO })
@@ -93,6 +92,4 @@ export class AdminsController {
   ): Promise<UserUpdateResponseDTO | UserUpdateAdminResponseDTO> {
     return this._userService.updateProfile(data, req.user, id);
   }
-
-
 }

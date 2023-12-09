@@ -19,5 +19,4 @@ export interface MailerVariables {
   userEmail?: string;
 
   email?: string;
-
 }

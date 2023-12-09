@@ -1,4 +1,3 @@
-
 import { applyDecorators, InternalServerErrorException } from '@nestjs/common';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
@@ -8,12 +7,10 @@ export namespace LanguageModel {
   export enum LANGUAGE {
     EN = 'en',
     PL = 'pl',
-
   }
   export class RawTranslationsDTO {
     en?: string;
     pl?: string;
-
   }
 
   export class TranslationDTO {
@@ -32,7 +29,6 @@ export namespace LanguageModel {
       message: i18nValidationMessage('validation.BODY_VALIDATION.IS_STRING'),
     })
     pl: string;
-
   }
 
   // for search query
@@ -53,7 +49,7 @@ export namespace LanguageModel {
   export type I18nPropertyRaw = { [key in LanguageModel.LANGUAGE]?: string };
 
   export class I18nProperty {
-    constructor(private _data: { [key in LANGUAGE]?: string } = {}) { }
+    constructor(private _data: { [key in LANGUAGE]?: string } = {}) {}
 
     // override JS toString method
     toString(): string {

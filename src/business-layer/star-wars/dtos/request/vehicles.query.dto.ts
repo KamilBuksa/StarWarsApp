@@ -9,8 +9,4 @@ export class StarWarsVehiclesQuery extends SimulatePaginationQuery {
   })
   @IsString()
   search?: string | undefined;
-
 }
-
-
-

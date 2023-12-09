@@ -2,8 +2,6 @@ import { USER_STATUS } from '../../../../data-access-layer/user-entity/entities/
 import { UserEntity } from '../../../../data-access-layer/user-entity/entities/user.entity';
 import { LanguageModel } from '../../../i18n/model/language.model';
 
-
-
 export class RegisterUserResponseDTO {
   id: string;
   status: USER_STATUS | null;

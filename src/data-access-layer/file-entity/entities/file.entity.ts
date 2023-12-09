@@ -88,6 +88,4 @@ export class FileEntity extends BaseEntity {
     onDelete: 'SET NULL',
   })
   files: FileEntity[];
-
-
 }

@@ -17,7 +17,7 @@ export class CdnHelpersService {
   constructor(
     private readonly _fileRepositoryService: FileRepositoryService,
     private readonly _userRepositoryService: UserRepositoryService,
-  ) { }
+  ) {}
 
   async handleFilesToAssign(
     files: {
@@ -70,8 +70,6 @@ export class CdnHelpersService {
           if (options?.isPublic)
             findFile.compressFile.isPublic = options.isPublic;
 
-
-
           filesToAssign.push(findFile.compressFile);
         }
         startOrderFrom++;
@@ -119,7 +117,6 @@ export class CdnHelpersService {
       await this._fileRepositoryService.softDeleteMany(ids);
     }
   }
-
 
   async softDeleteFromDbAndRemoveFile(fileEntity: FileEntity): Promise<void> {
     if (fileEntity) {

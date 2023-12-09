@@ -4,7 +4,7 @@ import {
   Injectable,
   MethodNotAllowedException,
   NotFoundException,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import moment from 'moment';
@@ -20,7 +20,7 @@ export class AccessGuard implements CanActivate {
     private readonly _userRepositoryService: UserRepositoryService,
     private readonly _i18nService: I18nService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const user: UserEntity = request.user;
@@ -82,8 +82,4 @@ export class AccessGuard implements CanActivate {
       } as { key: I18nPath });
     }
   }
-
-
-
-
 }

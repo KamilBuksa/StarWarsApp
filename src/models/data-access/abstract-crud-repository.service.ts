@@ -18,7 +18,7 @@ import { ApiModel } from '../api.model';
  * T - entity class
  */
 export abstract class AbstractCrudRepositoryService<T> {
-  constructor(private readonly _repository: Repository<T>) { }
+  constructor(private readonly _repository: Repository<T>) {}
 
   protected _preparePaginatedResponse(
     data: T[],

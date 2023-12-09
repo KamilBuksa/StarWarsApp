@@ -1,6 +1,4 @@
-import {
-  Controller, Get, Query, UseGuards
-} from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../../../data-access-layer/user-entity/entities/enums/user.roles';
@@ -27,12 +25,11 @@ import { StarWarsService } from '../services/star-wars.service';
 @ApiTags('Star Wars')
 @Controller('/star-wars')
 export class StarWarsController {
-  constructor(private readonly _starWarsService: StarWarsService) { }
-
+  constructor(private readonly _starWarsService: StarWarsService) {}
 
   @ApiOperation({
     summary: 'Show list of films',
-    description: "Search by title",
+    description: 'Search by title',
   })
   @ApiSwaggerModel.ApiOkResponsePaginated(FilmResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
@@ -47,7 +44,7 @@ export class StarWarsController {
 
   @ApiOperation({
     summary: 'Show list of species.',
-    description: "Search by name",
+    description: 'Search by name',
   })
   @ApiSwaggerModel.ApiOkResponsePaginated(SpeciesResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
@@ -62,7 +59,7 @@ export class StarWarsController {
 
   @ApiOperation({
     summary: 'Show list of vehicles.',
-    description: "Search by name, model",
+    description: 'Search by name, model',
   })
   @ApiSwaggerModel.ApiOkResponsePaginated(VehicleResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
@@ -77,7 +74,7 @@ export class StarWarsController {
 
   @ApiOperation({
     summary: 'Show list of starships.',
-    description: "Search by name, model",
+    description: 'Search by name, model',
   })
   @ApiSwaggerModel.ApiOkResponsePaginated(StarshipResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
@@ -92,7 +89,7 @@ export class StarWarsController {
 
   @ApiOperation({
     summary: 'Show list of planets.',
-    description: "Search by name",
+    description: 'Search by name',
   })
   @ApiSwaggerModel.ApiOkResponsePaginated(PlanetResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)

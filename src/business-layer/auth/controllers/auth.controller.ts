@@ -7,7 +7,7 @@ import {
   Query,
   Req,
   Request,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../../../data-access-layer/user-entity/entities/enums/user.roles';
@@ -23,9 +23,7 @@ import { EmailParamDTO } from '../dtos/request/email.dto';
 import { RegisterUserDTO } from '../dtos/request/register.user.dto';
 import { RemindPasswordSetNewPasswordDTO } from '../dtos/request/remind-password.dto';
 import { TokenParamDTO } from '../dtos/request/token.dto';
-import {
-  LoginResponseDTO
-} from '../dtos/response/login-user.response.dto';
+import { LoginResponseDTO } from '../dtos/response/login-user.response.dto';
 import { RegisterUserResponseDTO } from '../dtos/response/register-user.response.dto';
 import { AuthService } from '../services/auth.service';
 import { RegisterUserService } from '../services/register-user.service';
@@ -40,7 +38,7 @@ export class AuthController {
     private readonly _authService: AuthService,
     private readonly _registerUserService: RegisterUserService,
     private readonly _userPasswordService: UserPasswordService,
-  ) { }
+  ) {}
 
   @ApiOperation({
     summary: 'Login',
@@ -53,9 +51,8 @@ export class AuthController {
     @Request() req: ApiModel.RequestWithUser,
     @Body() data: LoginDTO,
   ): Promise<LoginResponseDTO> {
-    return this._authService.login(req.user,);
+    return this._authService.login(req.user);
   }
-
 
   @ApiOperation({
     summary: 'Register',
@@ -142,6 +139,4 @@ export class AuthController {
       responseLanguage,
     );
   }
-
-
 }

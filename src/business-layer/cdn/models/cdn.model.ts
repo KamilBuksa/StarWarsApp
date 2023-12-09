@@ -90,10 +90,6 @@ export namespace CDNModel {
         this.url =
           `${process.env.API_URL}cdn/files-url?fileId=` + fileEntity.id;
       }
-
-
     }
   }
-
-
 }

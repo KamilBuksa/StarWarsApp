@@ -31,4 +31,3 @@ export class AdminUserUpdateQuery {
   @IsString()
   userId?: string;
 }
-

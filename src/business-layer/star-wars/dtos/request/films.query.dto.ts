@@ -9,8 +9,4 @@ export class StarWarsFilmsQuery extends SimulatePaginationQuery {
   })
   @IsString()
   search?: string | undefined;
-
 }
-
-
-

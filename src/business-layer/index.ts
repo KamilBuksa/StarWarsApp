@@ -12,10 +12,10 @@ export const BUSINESS_LAYER_MODULES: (
   | Promise<DynamicModule>
   | ForwardReference<any>
 )[] = [
-    AuthModule,
-    UsersModule,
-    CdnModule,
-    MyMailerModule,
-    LanguageModule,
-    StarWarsModule,
-  ];
+  AuthModule,
+  UsersModule,
+  CdnModule,
+  MyMailerModule,
+  LanguageModule,
+  StarWarsModule,
+];

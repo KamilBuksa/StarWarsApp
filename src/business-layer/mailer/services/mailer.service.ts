@@ -19,7 +19,7 @@ export class MailService {
   constructor(
     private readonly _mailerService: MailerService,
     private readonly _i18nService: I18nService,
-  ) { }
+  ) {}
 
   async sendMail(options: {
     email: string | string[];

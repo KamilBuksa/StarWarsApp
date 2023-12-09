@@ -24,7 +24,6 @@ export class ShortUserResponseDTO {
     this.surname = userEntity.surname;
     this.lang = userEntity.lang;
     this.email = userEntity.email;
-
   }
 }
 // +
@@ -36,7 +35,7 @@ export class CurrentUserResponseDTO extends ShortUserResponseDTO {
   isAccountVerified: boolean;
   gender?: USER_GENDER;
 
-  constructor(userEntity: UserEntity,) {
+  constructor(userEntity: UserEntity) {
     super(userEntity);
     this.role = userEntity.role;
     this.status = userEntity.status;
@@ -62,7 +61,6 @@ export class UserAdminResponseDTO extends ShortUserResponseDTO {
     this.email = userEntity.email;
 
     this.role = userEntity.role;
-
   }
 }
 // +
@@ -81,7 +79,5 @@ export class UserDetailsAdminResponseDTO extends ShortUserResponseDTO {
     this.lang = userEntity.lang;
     this.isAccountVerified = userEntity.isAccountVerified;
     this.gender = userEntity.gender;
-
   }
 }
-

@@ -14,13 +14,10 @@ export class UserUpdateResponseDTO extends ShortUserResponseDTO {
   }
 }
 
-
-
 export class UserUpdateAdminResponseDTO extends UserUpdateResponseDTO {
   isAccountVerified: boolean;
   constructor(userEntity: UserEntity) {
     super(userEntity);
     this.isAccountVerified = userEntity.isAccountVerified;
-
   }
 }

@@ -1,5 +1,3 @@
-
-
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
@@ -17,23 +15,22 @@ import { StarshipResponseDTO } from '../dtos/response/starships.response.dto';
 import { StarWarsPlanetsQuery } from '../dtos/request/planets.query.dto';
 import { PlanetResponseDTO } from '../dtos/response/planets.response.dto';
 
-
 @Injectable()
 export class StarWarsService {
-  constructor(
-    private readonly httpService: HttpService
+  constructor(private readonly httpService: HttpService) {}
 
-
-  ) { }
-
-  async getFilms(query: StarWarsFilmsQuery): Promise<ApiModel.PaginatedResponse<FilmResponseDTO>> {
-    let api = `https://swapi.dev/api/films`
+  async getFilms(
+    query: StarWarsFilmsQuery,
+  ): Promise<ApiModel.PaginatedResponse<FilmResponseDTO>> {
+    let api = `https://swapi.dev/api/films`;
 
     if (query.search) {
-      api = `https://swapi.dev/api/films?search=${query.search}`
+      api = `https://swapi.dev/api/films?search=${query.search}`;
     }
 
-    const { data: { results } } = await firstValueFrom(
+    const {
+      data: { results },
+    } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
           console.log(error);
@@ -42,20 +39,27 @@ export class StarWarsService {
       ),
     );
 
-    const response = results.map((el: FilmResponseDTO) => new FilmResponseDTO(el));
-    return preparePaginatedSimulatedResponse(response, { limit: query.limit, page: query.page });
+    const response = results.map(
+      (el: FilmResponseDTO) => new FilmResponseDTO(el),
+    );
+    return preparePaginatedSimulatedResponse(response, {
+      limit: query.limit,
+      page: query.page,
+    });
   }
 
-
-
-  async getSpecies(query: StarWarsSpeciesQuery): Promise<ApiModel.PaginatedResponse<SpeciesResponseDTO>> {
-    let api = `https://swapi.dev/api/species`
+  async getSpecies(
+    query: StarWarsSpeciesQuery,
+  ): Promise<ApiModel.PaginatedResponse<SpeciesResponseDTO>> {
+    let api = `https://swapi.dev/api/species`;
 
     if (query.search) {
-      api = `https://swapi.dev/api/species?search=${query.search}`
+      api = `https://swapi.dev/api/species?search=${query.search}`;
     }
 
-    const { data: { results } } = await firstValueFrom(
+    const {
+      data: { results },
+    } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
           console.log(error);
@@ -64,19 +68,27 @@ export class StarWarsService {
       ),
     );
 
-    const response = results.map((el: SpeciesResponseDTO) => new SpeciesResponseDTO(el));
-    return preparePaginatedSimulatedResponse(response, { limit: query.limit, page: query.page });
+    const response = results.map(
+      (el: SpeciesResponseDTO) => new SpeciesResponseDTO(el),
+    );
+    return preparePaginatedSimulatedResponse(response, {
+      limit: query.limit,
+      page: query.page,
+    });
   }
 
-
-  async getVehicles(query: StarWarsVehiclesQuery): Promise<ApiModel.PaginatedResponse<VehicleResponseDTO>> {
-    let api = `https://swapi.dev/api/vehicles`
+  async getVehicles(
+    query: StarWarsVehiclesQuery,
+  ): Promise<ApiModel.PaginatedResponse<VehicleResponseDTO>> {
+    let api = `https://swapi.dev/api/vehicles`;
 
     if (query.search) {
-      api = `https://swapi.dev/api/vehicles?search=${query.search}`
+      api = `https://swapi.dev/api/vehicles?search=${query.search}`;
     }
 
-    const { data: { results } } = await firstValueFrom(
+    const {
+      data: { results },
+    } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
           console.log(error);
@@ -85,18 +97,27 @@ export class StarWarsService {
       ),
     );
 
-    const response = results.map((el: VehicleResponseDTO) => new VehicleResponseDTO(el));
-    return preparePaginatedSimulatedResponse(response, { limit: query.limit, page: query.page });
+    const response = results.map(
+      (el: VehicleResponseDTO) => new VehicleResponseDTO(el),
+    );
+    return preparePaginatedSimulatedResponse(response, {
+      limit: query.limit,
+      page: query.page,
+    });
   }
 
-  async getStarships(query: StarWarsStarshipsQuery): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
-    let api = `https://swapi.dev/api/starships`
+  async getStarships(
+    query: StarWarsStarshipsQuery,
+  ): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
+    let api = `https://swapi.dev/api/starships`;
 
     if (query.search) {
-      api = `https://swapi.dev/api/starships?search=${query.search}`
+      api = `https://swapi.dev/api/starships?search=${query.search}`;
     }
 
-    const { data: { results } } = await firstValueFrom(
+    const {
+      data: { results },
+    } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
           console.log(error);
@@ -105,18 +126,27 @@ export class StarWarsService {
       ),
     );
 
-    const response = results.map((el: StarshipResponseDTO) => new StarshipResponseDTO(el));
-    return preparePaginatedSimulatedResponse(response, { limit: query.limit, page: query.page });
+    const response = results.map(
+      (el: StarshipResponseDTO) => new StarshipResponseDTO(el),
+    );
+    return preparePaginatedSimulatedResponse(response, {
+      limit: query.limit,
+      page: query.page,
+    });
   }
 
-  async getPlanets(query: StarWarsPlanetsQuery): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
-    let api = `https://swapi.dev/api/planets`
+  async getPlanets(
+    query: StarWarsPlanetsQuery,
+  ): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
+    let api = `https://swapi.dev/api/planets`;
 
     if (query.search) {
-      api = `https://swapi.dev/api/planets?search=${query.search}`
+      api = `https://swapi.dev/api/planets?search=${query.search}`;
     }
 
-    const { data: { results } } = await firstValueFrom(
+    const {
+      data: { results },
+    } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
           console.log(error);
@@ -125,8 +155,12 @@ export class StarWarsService {
       ),
     );
 
-    const response = results.map((el: PlanetResponseDTO) => new PlanetResponseDTO(el));
-    return preparePaginatedSimulatedResponse(response, { limit: query.limit, page: query.page });
+    const response = results.map(
+      (el: PlanetResponseDTO) => new PlanetResponseDTO(el),
+    );
+    return preparePaginatedSimulatedResponse(response, {
+      limit: query.limit,
+      page: query.page,
+    });
   }
-
 }

@@ -11,12 +11,8 @@ import { ApiModel } from '../../../models/api.model';
 import { GenerateRandomUtils } from '../../../utils/generateRandom.utils';
 import { handleError } from '../../../utils/other.utils';
 import { MailService } from '../../mailer/services/mailer.service';
-import {
-  UpdateUserDTO,
-} from '../dtos/request/update.user.dto';
-import {
-  CurrentUserResponseDTO
-} from '../dtos/response/user.res.dto';
+import { UpdateUserDTO } from '../dtos/request/update.user.dto';
+import { CurrentUserResponseDTO } from '../dtos/response/user.res.dto';
 import {
   UserUpdateAdminResponseDTO,
   UserUpdateResponseDTO,
@@ -30,9 +26,7 @@ export class UserService {
     private readonly _dataSource: DataSource,
     private readonly _mailService: MailService,
     private readonly _userHelpersService: UserHelpersService,
-
-
-  ) { }
+  ) {}
 
   async updateProfile(
     data: UpdateUserDTO,
@@ -57,14 +51,10 @@ export class UserService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-
       await queryRunner.manager.update(UserEntity, userEntity.id, {
         ...dataForUpdateUser,
       });
       await queryRunner.commitTransaction();
-
-
-
     } catch (err) {
       console.error(err);
       await queryRunner.rollbackTransaction().catch(() => {
@@ -141,14 +131,10 @@ export class UserService {
           key: I18nPath;
         });
 
-      const response = new CurrentUserResponseDTO(
-        user,
-      );
+      const response = new CurrentUserResponseDTO(user);
       return response;
     } catch (error) {
       handleError(error);
     }
   }
-
-
 }

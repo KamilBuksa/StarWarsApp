@@ -4,7 +4,7 @@ import { I18nService } from 'nestjs-i18n';
 import { Strategy } from 'passport-local';
 import { UserEntity } from '../../../data-access-layer/user-entity/entities/user.entity';
 import { AuthHelpersService } from './auth-helpers.service';
-import { LoginDTO, } from '../dtos/request/login.dto';
+import { LoginDTO } from '../dtos/request/login.dto';
 
 @Injectable()
 export class PassportLocalStrategy extends PassportStrategy(Strategy) {

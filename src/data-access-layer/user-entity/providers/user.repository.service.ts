@@ -19,9 +19,7 @@ export class UserRepositoryService extends AbstractCrudRepositoryService<UserEnt
     super(_userRepository);
   }
 
-  async findOneById(
-    id: string,
-  ): Promise<UserEntity> {
+  async findOneById(id: string): Promise<UserEntity> {
     let query = this._userRepository.createQueryBuilder('user');
 
     query = query.where('user.id = :id AND user.status = :status', {
@@ -33,15 +31,10 @@ export class UserRepositoryService extends AbstractCrudRepositoryService<UserEnt
     return user;
   }
 
-
-
-
-
   async findOneByActivateAccountToken(
     token: string,
   ): Promise<UserEntity | undefined> {
-    let query = this._userRepository
-      .createQueryBuilder('user')
+    let query = this._userRepository.createQueryBuilder('user');
     query = query.where(
       'user.activateAccountToken = :token AND (user.isAccountVerified <> :isAccountVerified OR user.isAccountVerified IS NULL)',
       {
@@ -118,28 +111,20 @@ export class UserRepositoryService extends AbstractCrudRepositoryService<UserEnt
     return user;
   }
 
-
-
-
   async findOneByIdPure(
     userId: string,
     options?: { select: EntityKeys<UserEntity> },
   ): Promise<UserEntity> {
     let query = this._userRepository.createQueryBuilder('user');
-    query = query
-      .where('user.id = :userId', {
-        userId,
-      })
-
-
+    query = query.where('user.id = :userId', {
+      userId,
+    });
 
     if (options?.select) {
       query = query.select(options.select.map((el) => `user.${el}`));
     }
 
-
-    const user: UserEntity | undefined = await query
-      .getOne();
+    const user: UserEntity | undefined = await query.getOne();
     return user;
   }
 
@@ -212,11 +197,8 @@ export class UserRepositoryService extends AbstractCrudRepositoryService<UserEnt
   async findUserProfileById(
     userId: string,
     options?: { select?: EntityKeys<UserEntity>; withPassword?: boolean },
-
   ): Promise<UserEntity> {
-    let query = this._userRepository
-      .createQueryBuilder('user')
-
+    let query = this._userRepository.createQueryBuilder('user');
 
     query.where('user.id = :userId', {
       userId,
@@ -238,8 +220,7 @@ export class UserRepositoryService extends AbstractCrudRepositoryService<UserEnt
       role?: USER_ROLE;
     },
   ): Promise<UserEntity> {
-    let query = this._userRepository
-      .createQueryBuilder('user')
+    let query = this._userRepository.createQueryBuilder('user');
 
     query.where('user.id = :userId', {
       userId,

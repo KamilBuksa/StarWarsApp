@@ -34,10 +34,9 @@ import { UserPasswordService } from './services/user-password.service';
     UsersModule,
     CdnModule,
     MyMailerModule,
-
   ],
 
-  controllers: [AuthController,],
+  controllers: [AuthController],
   providers: [
     AuthService,
     PassportLocalStrategy,
@@ -48,4 +47,4 @@ import { UserPasswordService } from './services/user-password.service';
   ],
   exports: [AuthHelpersService],
 })
-export class AuthModule { }
+export class AuthModule {}
