@@ -52,6 +52,9 @@ export class RegisterUserService {
       );
       userEntity.activateAccountToken = token;
 
+      // SET TO TRUE FOR TESTING PURPOSES // because mailing is not working  
+      userEntity.isAccountVerified = true;
+
       const newUser: UserEntity = await this._userRepositoryService.save(
         userEntity,
       );
