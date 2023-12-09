@@ -4,6 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
+import { preparePaginatedSimulatedResponse } from '../../../models/data-access/simulate-pagination.service';
 import { StarWarsFilmsQuery } from '../dtos/request/films.query.dto';
 
 
@@ -25,16 +26,12 @@ export class StarWarsService {
     const { data: { results } } = await firstValueFrom(
       this.httpService.get<any>(api, {}).pipe(
         catchError((error: AxiosError) => {
-          // this.logger.error(error.response.data);
           console.log(error);
           throw 'An error happened!';
         }),
       ),
     );
-
-    return results
-
+    return preparePaginatedSimulatedResponse(results, { limit: query.limit, page: query.page });
   }
-
 
 }
