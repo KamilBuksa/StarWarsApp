@@ -4,6 +4,9 @@ import { Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
 import { PAGINATION_BASE_LIMIT, PAGINATION_BASE_PAGE } from "../../utils/dtos/pagination-query.dto";
 
+
+
+
 export class SimulatePaginationQuery {
   @IsOptional()
   @Type(() => Number)

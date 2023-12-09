@@ -8,17 +8,20 @@ import { Roles } from '../../../decorators/roles.decorator';
 import { AccessGuard } from '../../../guards/access.guard';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../../guards/roles.guard';
+import { ApiModel } from '../../../models/api.model';
 import { ApiSwaggerModel } from '../../../models/api.swagger.model';
 import { LanguageHeadersModel } from '../../i18n/model/language-headers.model';
-import { UserAdminResponseDTO } from '../../users/dtos/response/user.res.dto';
 import { StarWarsFilmsQuery } from '../dtos/request/films.query.dto';
-import { StarWarsService } from '../services/star-wars.service';
-import { ApiModel } from '../../../models/api.model';
-import { FilmResponseDTO } from '../dtos/response/films.response.dto';
+import { StarWarsPlanetsQuery } from '../dtos/request/planets.query.dto';
 import { StarWarsSpeciesQuery } from '../dtos/request/species.query.dto';
-import { SpeciesResponseDTO } from '../dtos/response/species.response.dto';
+import { StarWarsStarshipsQuery } from '../dtos/request/starships.query.dto';
 import { StarWarsVehiclesQuery } from '../dtos/request/vehicles.query.dto';
+import { FilmResponseDTO } from '../dtos/response/films.response.dto';
+import { PlanetResponseDTO } from '../dtos/response/planets.response.dto';
+import { SpeciesResponseDTO } from '../dtos/response/species.response.dto';
+import { StarshipResponseDTO } from '../dtos/response/starships.response.dto';
 import { VehicleResponseDTO } from '../dtos/response/vehicles.response.dto';
+import { StarWarsService } from '../services/star-wars.service';
 
 @ApiBearerAuth()
 @ApiTags('Star Wars')
@@ -72,4 +75,33 @@ export class StarWarsController {
     return this._starWarsService.getVehicles(query);
   }
 
+  @ApiOperation({
+    summary: 'Show list of starships.',
+    description: "Search by name, model",
+  })
+  @ApiSwaggerModel.ApiOkResponsePaginated(StarshipResponseDTO)
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Get('/starships')
+  getStarships(
+    @Query() query: StarWarsStarshipsQuery,
+  ): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
+    return this._starWarsService.getStarships(query);
+  }
+
+  @ApiOperation({
+    summary: 'Show list of planets.',
+    description: "Search by name",
+  })
+  @ApiSwaggerModel.ApiOkResponsePaginated(PlanetResponseDTO)
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Get('/planets')
+  getPlanets(
+    @Query() query: StarWarsPlanetsQuery,
+  ): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
+    return this._starWarsService.getPlanets(query);
+  }
 }

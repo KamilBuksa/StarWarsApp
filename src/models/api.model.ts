@@ -48,6 +48,7 @@ export namespace ApiModel {
     query?: string | undefined;
   }
 
+
   export class PaginationMeta {
     current_page: number;
     last_page: number;
