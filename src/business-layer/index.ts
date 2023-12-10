@@ -4,6 +4,7 @@ import { CdnModule } from './cdn/cdn.module';
 import { LanguageModule } from './language/language.module';
 import { MyMailerModule } from './mailer/mailer.module';
 import { UsersModule } from './users/users.module';
+import { StarWarsModule } from './star-wars/star-wars.module';
 
 export const BUSINESS_LAYER_MODULES: (
   | Type<any>
@@ -11,10 +12,10 @@ export const BUSINESS_LAYER_MODULES: (
   | Promise<DynamicModule>
   | ForwardReference<any>
 )[] = [
-    AuthModule,
-    UsersModule,
-    CdnModule,
-    MyMailerModule,
-    LanguageModule,
-
-  ];
+  AuthModule,
+  UsersModule,
+  CdnModule,
+  MyMailerModule,
+  LanguageModule,
+  StarWarsModule,
+];

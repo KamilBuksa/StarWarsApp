@@ -1,2 +1,1 @@
-
-export * from './email-not-verified.exception'
+export * from './email-not-verified.exception';

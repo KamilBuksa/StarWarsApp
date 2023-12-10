@@ -2,7 +2,7 @@ import {
   ForbiddenException,
   Injectable,
   MethodNotAllowedException,
-  NotFoundException
+  NotFoundException,
 } from '@nestjs/common';
 import * as randomstring from 'randomstring';
 
@@ -27,7 +27,7 @@ export class AuthHelpersService {
     private readonly _configService: ConfigService,
     private readonly _jwtService: JwtService,
     private readonly _mailService: MailService,
-  ) { }
+  ) {}
 
   async generateToken(): Promise<string> {
     try {
@@ -113,8 +113,6 @@ export class AuthHelpersService {
     }
   }
 
-
-
   private async _validateUserPassword(
     password: string,
     user: UserEntity,
@@ -157,15 +155,11 @@ export class AuthHelpersService {
     }
   }
 
-
-
-  async sendRegistrationEmail(
-    data: {
-      lang: LanguageModel.LANGUAGE;
-      email: string;
-      token: string;
-    },
-  ): Promise<void> {
+  async sendRegistrationEmail(data: {
+    lang: LanguageModel.LANGUAGE;
+    email: string;
+    token: string;
+  }): Promise<void> {
     const { email, lang, token } = data;
 
     this._mailService.sendMail({
@@ -174,8 +168,9 @@ export class AuthHelpersService {
       template: 'email-account-activation',
       subject: 'validation.EMAIL_ACTIVATE_ACCOUNT.SUBJECT',
       variables: {
-        link: `${process.env.FRONT_URL}${lang === LanguageModel.LANGUAGE.EN ? '' : `/${lang}`
-          }/confirm-email/${token}`,
+        link: `${process.env.FRONT_URL}${
+          lang === LanguageModel.LANGUAGE.EN ? '' : `/${lang}`
+        }/confirm-email/${token}`,
       },
     });
   }

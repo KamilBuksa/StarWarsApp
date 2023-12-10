@@ -31,13 +31,8 @@ class LoginUserResponseDTO {
 export class LoginResponseDTO {
   user: LoginUserResponseDTO;
   tokenData?: AccessTokenData;
-  constructor(
-    userEntity: UserEntity,
-    tokenData: AccessTokenData,
-  ) {
+  constructor(userEntity: UserEntity, tokenData: AccessTokenData) {
     this.user = new LoginUserResponseDTO(userEntity);
     this.tokenData = tokenData ? new AccessTokenData(tokenData) : null;
-
   }
 }
-

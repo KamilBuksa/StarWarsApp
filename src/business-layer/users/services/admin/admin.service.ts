@@ -1,7 +1,7 @@
 import {
   Injectable,
   MethodNotAllowedException,
-  NotFoundException
+  NotFoundException,
 } from '@nestjs/common';
 
 import { FileRepositoryService } from '../../../../data-access-layer/file-entity/services/file-repository.service';
@@ -27,8 +27,7 @@ export class AdminService {
     private readonly _userRepositoryService: UserRepositoryService,
     private readonly _fileRepositoryService: FileRepositoryService,
     private readonly _cdnHelpersService: CdnHelpersService,
-
-  ) { }
+  ) {}
 
   async changeUserStatus(data: UserStatusDTO): Promise<UserAdminResponseDTO> {
     let response: undefined | UserAdminResponseDTO;
@@ -120,7 +119,7 @@ export class AdminService {
   async getUserDetails(userId: string): Promise<UserDetailsAdminResponseDTO> {
     try {
       const user: UserEntity =
-        await this._userRepositoryService.findUserProfileById(userId, null,);
+        await this._userRepositoryService.findUserProfileById(userId, null);
 
       if (!user) {
         throw new NotFoundException({ key: 'validation.USER_NOT_FOUND' });
@@ -131,6 +130,4 @@ export class AdminService {
       handleError(error);
     }
   }
-
-
 }

@@ -152,7 +152,6 @@ export class FileRepositoryService extends AbstractCrudRepositoryService<FileEnt
     return file;
   }
 
-
   async findAllByIdsWithOnlyIds(
     ids: string[],
     userId: string,
@@ -195,7 +194,6 @@ export class FileRepositoryService extends AbstractCrudRepositoryService<FileEnt
     return await query.getMany();
   }
 
-
   async findFilesForCronRemove(date?: Date): Promise<FileEntity[]> {
     const query = this._fileRepository
       .createQueryBuilder('file')
@@ -220,6 +218,4 @@ export class FileRepositoryService extends AbstractCrudRepositoryService<FileEnt
     const file: FileEntity | undefined = await query.getOne();
     return file;
   }
-
-
 }

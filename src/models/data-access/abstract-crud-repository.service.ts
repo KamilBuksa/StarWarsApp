@@ -51,6 +51,9 @@ export abstract class AbstractCrudRepositoryService<T> {
   async saveMany(data: DeepPartial<T>[], options?: SaveOptions): Promise<T[]> {
     return this._repository.save(data, options);
   }
+  async find(): Promise<T[]> {
+    return this._repository.find();
+  }
 
   async update(
     id: string | FindOptionsWhere<T>,

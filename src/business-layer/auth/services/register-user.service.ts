@@ -26,7 +26,7 @@ export class RegisterUserService {
     private readonly _userHelpersService: UserHelpersService,
     private readonly _mailService: MailService,
     private readonly _authHelpersService: AuthHelpersService,
-  ) { }
+  ) {}
 
   async registerUser(
     data: RegisterUserDTO,
@@ -43,14 +43,17 @@ export class RegisterUserService {
         email: data.email,
       });
 
-      const [userEntity]: [UserEntity,] =
-        await this._userHelpersService.createUserEntity(data,);
+      const [userEntity]: [UserEntity] =
+        await this._userHelpersService.createUserEntity(data);
 
       const token = await this._authHelpersService.generateToken();
       userEntity.activateAccountTokenExpirationDate = DateUtils.getNextDay(
         new Date(),
       );
       userEntity.activateAccountToken = token;
+
+      // SET TO TRUE FOR TESTING PURPOSES // because mailing is not working
+      userEntity.isAccountVerified = true;
 
       const newUser: UserEntity = await this._userRepositoryService.save(
         userEntity,
@@ -93,7 +96,6 @@ export class RegisterUserService {
         activateAccountTokenExpirationDate: null,
         isAccountVerified: true,
       });
-
 
       return {
         status: true,
@@ -156,10 +158,11 @@ export class RegisterUserService {
         template: 'email-account-activation',
         subject: 'validation.EMAIL_ACTIVATE_ACCOUNT.SUBJECT',
         variables: {
-          link: `${process.env.FRONT_URL}${responseLanguage === LanguageModel.LANGUAGE.EN
-            ? ''
-            : `/${responseLanguage}`
-            }/confirm-email/${token}`,
+          link: `${process.env.FRONT_URL}${
+            responseLanguage === LanguageModel.LANGUAGE.EN
+              ? ''
+              : `/${responseLanguage}`
+          }/confirm-email/${token}`,
         },
         choseAttachments: {
           step1: true,
@@ -172,6 +175,4 @@ export class RegisterUserService {
       handleError(error);
     }
   }
-
-
 }

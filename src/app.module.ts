@@ -131,6 +131,4 @@ import { GlobalModule } from './global.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {
-
-}
+export class AppModule {}

@@ -109,7 +109,6 @@ export namespace ApiModel {
     user: UserEntity;
   } & Request;
 
-
   export const emptyResponse = () => {
     return {
       data: [],

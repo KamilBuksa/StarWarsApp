@@ -38,7 +38,7 @@ import { AccessGuard } from '../../../../guards/access.guard';
 @ApiTags('cdn')
 @Controller('/cdn')
 export class CdnController {
-  constructor(private readonly _cdnService: CdnService) { }
+  constructor(private readonly _cdnService: CdnService) {}
 
   @ApiSwaggerModel.ApiFileCustom()
   @Roles(USER_ROLE.ADMIN, USER_ROLE.USER)

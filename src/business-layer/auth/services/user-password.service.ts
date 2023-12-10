@@ -26,7 +26,7 @@ export class UserPasswordService {
     private readonly _authHelpersService: AuthHelpersService,
     private readonly _mailService: MailService,
     private readonly _configService: ConfigService,
-  ) { }
+  ) {}
   async changePassword(
     userId: string,
     data: ChangePasswordDTO,
@@ -112,10 +112,11 @@ export class UserPasswordService {
         template: 'email-remind-password',
         subject: 'validation.EMAIL_REMIND_PASSWORD.SUBJECT',
         variables: {
-          link: `${process.env.FRONT_URL}${responseLanguage === LanguageModel.LANGUAGE.EN
-            ? ''
-            : `/${responseLanguage}`
-            }/change-password/${token}`,
+          link: `${process.env.FRONT_URL}${
+            responseLanguage === LanguageModel.LANGUAGE.EN
+              ? ''
+              : `/${responseLanguage}`
+          }/change-password/${token}`,
           email: this._configService.get<string>('CONTACT_MAIL'), //
         },
       });

@@ -32,14 +32,12 @@ export class UpdateUserDTO extends PartialType(
   })
   gender?: USER_GENDER;
 
-
   @IsOptional()
   @IsNotEmpty()
   @IsEnum(LanguageModel.LANGUAGE, {
     message: `Available values: ${Object.values(LanguageModel.LANGUAGE)}`,
   })
   lang?: LanguageModel.LANGUAGE;
-
 }
 
 export type UpdateInterface = Omit<UpdateUserDTO, ''>;

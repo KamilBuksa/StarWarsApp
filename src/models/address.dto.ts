@@ -8,7 +8,6 @@ import {
   MaxLength,
 } from 'class-validator';
 
-
 export namespace AddressModel {
   export class AddressDTO {
     @MaxLength(200)
@@ -38,7 +37,7 @@ export namespace AddressModel {
     countryCode: string;
   }
 
-  export class AddressOptionalDTO extends PartialType(AddressDTO) { }
+  export class AddressOptionalDTO extends PartialType(AddressDTO) {}
   export class AddressWithIdDTO extends AddressDTO {
     @IsNotEmpty()
     @IsUUID()
@@ -67,4 +66,3 @@ export namespace AddressModel {
     }
   }
 }
-

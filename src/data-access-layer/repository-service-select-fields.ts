@@ -1,5 +1,4 @@
 export class DefaultSelectFields {
-
   static userSelectFields: string[] = [
     'user.id',
     'user.name',
@@ -33,5 +32,4 @@ export class DefaultSelectFields {
     'files.contentType',
     'files.status',
   ];
-
 }

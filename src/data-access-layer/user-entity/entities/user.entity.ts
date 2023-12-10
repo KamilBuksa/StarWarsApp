@@ -3,7 +3,7 @@ import {
   Column,
   DeleteDateColumn,
   Entity,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 import { LanguageModel } from '../../../business-layer/i18n/model/language.model';
 import { BaseEntity } from '../../../models/entity/base-entity.entity';
@@ -92,7 +92,4 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => FileEntity, (entity) => entity.user, {})
   files: FileEntity[];
-
-
-
 }

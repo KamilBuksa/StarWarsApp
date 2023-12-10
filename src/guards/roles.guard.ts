@@ -2,16 +2,14 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { UserEntity } from '../data-access-layer/user-entity/entities/user.entity';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-  ) { }
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
@@ -26,9 +24,6 @@ export class RolesGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-
     return roles.includes(user.role.toString());
   }
-
-
 }

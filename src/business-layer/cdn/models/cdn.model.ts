@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
   IsNotEmpty,
@@ -11,13 +10,11 @@ import {
 
 import { FILE_CONTENT_TYPE } from '../../../data-access-layer/file-entity/entities/content.type';
 import { FileEntity } from '../../../data-access-layer/file-entity/entities/file.entity';
-import { FILE_TYPE } from '../../../data-access-layer/file-entity/entities/file.type';
-import { USER_ROLE } from '../../../data-access-layer/user-entity/entities/enums/user.roles';
 import { FILE_STATUS } from '../../../data-access-layer/file-entity/entities/file.status';
+import { FILE_TYPE } from '../../../data-access-layer/file-entity/entities/file.type';
 
 export namespace CDNModel {
-  export const TYPES_AVAILABLE_TO_DELETE = [];
-  export const MAX_IMAGE_SIZE: number = 1024 * 1024 * 15; // max size: 600 mb
+  export const TYPES_AVAILABLE_TO_DELETE = [FILE_TYPE.AVATAR];
 
   export class ChangeFilePositionDTO {
     @IsNotEmpty()
@@ -75,7 +72,7 @@ export namespace CDNModel {
   export class FileResponseDTO {
     id: string;
     originalname: string;
-    createdAt: string;
+    createdAt: Date;
     type: FILE_TYPE;
     url: string;
     order: number;
@@ -93,27 +90,6 @@ export namespace CDNModel {
         this.url =
           `${process.env.API_URL}cdn/files-url?fileId=` + fileEntity.id;
       }
-
-
     }
   }
-
-  export class FileWithCarrierInsuranceExpirationDateResponseDTO extends FileResponseDTO {
-    @ApiProperty({
-      example: '2021-03-03',
-      description: 'Carrier insurance expiration date',
-    })
-    carrierInsuranceExpirationDate: Date;
-    constructor(fileEntity: FileEntity, carrierInsuranceExpirationDate: Date) {
-      super(fileEntity);
-      this.carrierInsuranceExpirationDate = carrierInsuranceExpirationDate;
-    }
-  }
-
-  export type CdnValidationInterface = {
-    type: FILE_TYPE;
-    mimetype: string;
-    role: USER_ROLE;
-    userId: string;
-  };
 }

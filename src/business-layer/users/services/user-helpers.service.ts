@@ -15,9 +15,7 @@ import { UserRepositoryService } from '../../../data-access-layer/user-entity/pr
 import { I18nPath } from '../../../generated/i18n.generated';
 import { handleError } from '../../../utils/other.utils';
 import { PasswordsUtils } from '../../../utils/passwords.utilts';
-import {
-  RegisterUserDTO
-} from '../../auth/dtos/request/register.user.dto';
+import { RegisterUserDTO } from '../../auth/dtos/request/register.user.dto';
 import { ValidateRegisterUserInterface } from '../user.types';
 
 @Injectable()
@@ -25,15 +23,9 @@ export class UserHelpersService {
   constructor(
     private readonly _userRepositoryService: UserRepositoryService,
     private readonly _i18nService: I18nService,
-  ) { }
+  ) {}
 
-
-
-  async createUserEntity(
-    data: RegisterUserDTO,
-
-  ): Promise<[UserEntity,]> {
-
+  async createUserEntity(data: RegisterUserDTO): Promise<[UserEntity]> {
     const newUser = await this._userRepositoryService.create({
       status: USER_STATUS.ACTIVATED,
       email: data.email.toLowerCase(),
@@ -45,18 +37,13 @@ export class UserHelpersService {
       lang: data.lang,
       name: data.name,
       surname: data.surname,
-      gender: data.gender
-
-
+      gender: data.gender,
     });
-
 
     const user = await this._userRepositoryService.save(newUser);
 
-
-    return [user,];
+    return [user];
   }
-
 
   async saveUserEntity(userEntity: UserEntity): Promise<UserEntity> {
     return await this._userRepositoryService.save(userEntity);
@@ -117,8 +104,6 @@ export class UserHelpersService {
     }
   }
 
-
-
   async findAdnValidateUserByEmail(email: string): Promise<UserEntity> {
     try {
       if (email) {
@@ -157,9 +142,4 @@ export class UserHelpersService {
       handleError(error);
     }
   }
-
-
-
-
-
 }

@@ -23,4 +23,3 @@ export class EmailNotVerifiedException extends HttpException {
     );
   }
 }
-

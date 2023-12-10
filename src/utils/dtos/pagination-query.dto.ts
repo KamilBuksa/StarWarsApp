@@ -7,8 +7,8 @@ import {
   IsString,
 } from 'class-validator';
 
-const PAGINATION_BASE_PAGE = 1;
-const PAGINATION_BASE_LIMIT = 10;
+export const PAGINATION_BASE_PAGE = 1;
+export const PAGINATION_BASE_LIMIT = 10;
 
 export class PaginationQuery {
   @IsOptional()

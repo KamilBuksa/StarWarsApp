@@ -19,8 +19,7 @@ import { UserService } from './services/user.service';
 
     MyMailerModule,
     FileEntityModule,
-
   ],
   exports: [UserHelpersService, UserService, UserEntityModule, AdminService],
 })
-export class UsersModule { }
+export class UsersModule {}
