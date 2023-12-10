@@ -1,6 +1,7 @@
 import { Controller, Get, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { ApiBearerAuth, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../../../data-access-layer/user-entity/entities/enums/user.roles';
 import { Roles } from '../../../decorators/roles.decorator';
 import { AccessGuard } from '../../../guards/access.guard';
@@ -8,6 +9,9 @@ import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../../guards/roles.guard';
 import { ApiModel } from '../../../models/api.model';
 import { ApiSwaggerModel } from '../../../models/api.swagger.model';
+import { HttpCacheInterceptor } from '../../cache/cache.interceptor';
+import { CACHE_KEYS } from '../../cache/constants/cache.keys';
+import { TTL_CONSTANTS } from '../../cache/constants/ttl.constants';
 import { LanguageHeadersModel } from '../../i18n/model/language-headers.model';
 import { StarWarsFilmsQuery } from '../dtos/request/films.query.dto';
 import { StarWarsPlanetsQuery } from '../dtos/request/planets.query.dto';
@@ -20,16 +24,16 @@ import { SpeciesResponseDTO } from '../dtos/response/species.response.dto';
 import { StarshipResponseDTO } from '../dtos/response/starships.response.dto';
 import { VehicleResponseDTO } from '../dtos/response/vehicles.response.dto';
 import { StarWarsService } from '../services/star-wars.service';
-import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
-import { CACHE_KEYS } from '../../cache/constants/cache.keys';
-import { TTL_CONSTANTS } from '../../cache/constants/ttl.constants';
-import { HttpCacheInterceptor } from '../../cache/cache.interceptor';
+import { ApiUniqueWordsResponse } from '../dtos/response/api-unique-words.response.dto';
 
 @ApiBearerAuth()
 @ApiTags('Star Wars')
 @Controller('/star-wars')
 export class StarWarsController {
-  constructor(private readonly _starWarsService: StarWarsService) { }
+  constructor(
+    private readonly _starWarsService: StarWarsService,
+
+  ) { }
 
   @ApiOperation({
     summary: 'Show list of films',
@@ -43,10 +47,10 @@ export class StarWarsController {
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/films')
-  getFilms(
+  async getFilms(
     @Query() query: StarWarsFilmsQuery,
   ): Promise<ApiModel.PaginatedResponse<FilmResponseDTO>> {
-    return this._starWarsService.getFilms(query);
+    return await this._starWarsService.getFilms(query);
   }
 
   @ApiOperation({
@@ -61,10 +65,10 @@ export class StarWarsController {
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/species')
-  getSpecies(
+  async getSpecies(
     @Query() query: StarWarsSpeciesQuery,
   ): Promise<ApiModel.PaginatedResponse<SpeciesResponseDTO>> {
-    return this._starWarsService.getSpecies(query);
+    return await this._starWarsService.getSpecies(query);
   }
 
   @ApiOperation({
@@ -79,10 +83,10 @@ export class StarWarsController {
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/vehicles')
-  getVehicles(
+  async getVehicles(
     @Query() query: StarWarsVehiclesQuery,
   ): Promise<ApiModel.PaginatedResponse<VehicleResponseDTO>> {
-    return this._starWarsService.getVehicles(query);
+    return await this._starWarsService.getVehicles(query);
   }
 
   @ApiOperation({
@@ -97,10 +101,10 @@ export class StarWarsController {
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/starships')
-  getStarships(
+  async getStarships(
     @Query() query: StarWarsStarshipsQuery,
   ): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
-    return this._starWarsService.getStarships(query);
+    return await this._starWarsService.getStarships(query);
   }
 
   @ApiOperation({
@@ -115,9 +119,19 @@ export class StarWarsController {
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/planets')
-  getPlanets(
+  async getPlanets(
     @Query() query: StarWarsPlanetsQuery,
   ): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
-    return this._starWarsService.getPlanets(query);
+    return await this._starWarsService.getPlanets(query);
   }
+
+
+  @ApiOperation({ summary: 'Find Unique Word Pairs and Their Occurrences', description: "This endpoint allows you to find unique word pairs and count their occurrences in text. Word pairs are separated by spaces or any number of control characters, and the result is a list of these pairs along with the count of their occurrences." })
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @Get('unique-word-pairs')
+  async getUniqueWordsAndCharacterName(): Promise<ApiUniqueWordsResponse> {
+    return await this._starWarsService.getUniqueWordsAndMostFrequentCharacter();
+  }
+
 }

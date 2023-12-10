@@ -36,4 +36,13 @@ export class FilmRepositoryService extends AbstractCrudRepositoryService<FilmEnt
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
   }
+
+
+
+  async getAllOpeningCrawls(): Promise<string[]> {
+    const films = await this._filmRepository.find({
+      select: ['openingCrawl'],
+    });
+    return films.map(film => film.openingCrawl);
+  }
 }

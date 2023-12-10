@@ -7,37 +7,49 @@ export const initSwagger = (
   admin: { name: string; pass: string },
 ) => {
   // if you are using setGlobalPrefix -> use it before initSwagger()
-  const httpAdapter = app.getHttpAdapter();
-  httpAdapter.use(`/${apiPrefix}/doc`, (req, res, next) => {
-    function parseAuthHeader(input: string): { name: string; pass: string } {
-      const [, encodedPart] = input.split(' ');
-      const buff = Buffer.from(encodedPart, 'base64');
-      const text = buff.toString('ascii');
-      const [name, pass] = text.split(':');
-      return { name, pass };
-    }
-    function unauthorizedResponse(): void {
-      if (httpAdapter.getType() === 'fastify') {
-        res.statusCode = 401;
-        res.setHeader('WWW-Authenticate', 'Basic');
-      } else {
-        res.status(401);
-        res.set('WWW-Authenticate', 'Basic');
+
+
+  const swaggerUrls = [
+    `/${apiPrefix}/doc-json`,
+    `/${apiPrefix}/doc`,
+  ];
+
+  swaggerUrls.forEach((url) => {
+    const httpAdapter = app.getHttpAdapter();
+    httpAdapter.use(url, (req, res, next) => {
+      function parseAuthHeader(input: string): { name: string; pass: string } {
+        const [, encodedPart] = input.split(' ');
+        const buff = Buffer.from(encodedPart, 'base64');
+        const text = buff.toString('ascii');
+        const [name, pass] = text.split(':');
+        return { name, pass };
+      }
+      function unauthorizedResponse(): void {
+        if (httpAdapter.getType() === 'fastify') {
+          res.statusCode = 401;
+          res.setHeader('WWW-Authenticate', 'Basic');
+        } else {
+          res.status(401);
+          res.set('WWW-Authenticate', 'Basic');
+        }
+        next();
+      }
+      if (!req.headers.authorization) {
+        return unauthorizedResponse();
+      }
+      const credentials = parseAuthHeader(req.headers.authorization);
+      if (
+        credentials?.name !== admin?.name ||
+        credentials?.pass !== admin?.pass
+      ) {
+        return unauthorizedResponse();
       }
       next();
-    }
-    if (!req.headers.authorization) {
-      return unauthorizedResponse();
-    }
-    const credentials = parseAuthHeader(req.headers.authorization);
-    if (
-      credentials?.name !== admin?.name ||
-      credentials?.pass !== admin?.pass
-    ) {
-      return unauthorizedResponse();
-    }
-    next();
-  });
+    });
+  }
+  );
+
+
 
   const config = new DocumentBuilder()
     .setTitle('Galactic Pioneers_ex ')

@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
-import { catchError } from 'rxjs/operators';
 import { firstValueFrom } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class StarWarsApiService {
   constructor(private readonly httpService: HttpService) { }
 
-  async fetchDataFromSwapi(apiUrl: string) {
+  async fetchDataFromSwApi(apiUrl: string) {
     try {
       const response = await firstValueFrom(
         this.httpService.get<any>(apiUrl).pipe(
@@ -23,4 +23,5 @@ export class StarWarsApiService {
       throw error;
     }
   }
+
 }

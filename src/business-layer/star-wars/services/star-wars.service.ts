@@ -17,6 +17,7 @@ import { StarshipResponseDTO } from '../dtos/response/starships.response.dto';
 import { VehicleResponseDTO } from '../dtos/response/vehicles.response.dto';
 import { StarWarsApiService } from './star-wars-api.service';
 import { StarWarsHelpersService } from './star-wars-helpers.service';
+import { ApiUniqueWordsResponse } from '../dtos/response/api-unique-words.response.dto';
 
 @Injectable()
 export class StarWarsService {
@@ -36,7 +37,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<FilmResponseDTO>> {
     let api = `https://swapi.dev/api/films`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwapi(api);
+    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingFilms = await this.filmRepository.find();
     const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms(existingFilms, results);
@@ -62,7 +63,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<SpeciesResponseDTO>> {
     let api = `https://swapi.dev/api/species`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwapi(api);
+    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingSpecies = await this.speciesRepository.find();
     const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies(existingSpecies, results);
@@ -87,7 +88,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<VehicleResponseDTO>> {
     let api = `https://swapi.dev/api/vehicles`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwapi(api);
+    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingVehicles = await this.vehicleRepository.find();
     const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles(existingVehicles, results);
@@ -114,7 +115,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
     let api = `https://swapi.dev/api/starships`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwapi(api);
+    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingStarships = await this.starshipRepository.find();
     const updatedStarships = this.StarWarsHelpersService.updateOrCreateStarships(existingStarships, results);
@@ -140,7 +141,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
     let api = `https://swapi.dev/api/planets`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwapi(api);
+    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingPlanets = await this.planetRepository.find();
     const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets(existingPlanets, results);
@@ -161,6 +162,85 @@ export class StarWarsService {
     };
 
   }
+
+
+  async getUniqueWordsAndMostFrequentCharacter(): Promise<ApiUniqueWordsResponse> {
+
+    // Get the opening crawls from all films
+    const films = await this.filmRepository.find();
+    const openingCrawls = films.map((film) => film.openingCrawl);
+
+    // Task A: Extract unique word pairs and count their occurrences
+    const uniqueWordPairsAndOccurrences = this.extractUniqueWordPairs(openingCrawls);
+
+    // Get the names of characters
+
+    const characterUrls = films.map(film => film.characters).flat();
+
+    const namesOfFilteredPeople = await this.fetchAndFilterPeople(characterUrls);
+
+    // Task B: Find the characters with the most occurrences
+    const mostFrequentCharacters = this.findMostFrequentCharacter(openingCrawls, namesOfFilteredPeople);
+
+    return {
+      mostFrequentCharacters,
+      uniqueWordPairsAndOccurrences,
+    };
+  }
+
+  private extractUniqueWordPairs(openingCrawls: string[]): Record<string, number> {
+    const wordPairCounts: Record<string, number> = {};
+
+    openingCrawls.forEach((crawl) => {
+      const words = crawl.split(/[\p{Cc}\p{Cf}\s]+/gu).filter(Boolean);
+      console.log(words);
+      for (let i = 0; i < words.length - 1; i++) {
+        const wordPair = `${words[i]} ${words[i + 1]}`;
+        wordPairCounts[wordPair] = (wordPairCounts[wordPair] || 0) + 1;
+      }
+    });
+
+    return wordPairCounts;
+  }
+
+
+
+  async fetchAndFilterPeople(urls: string[]) {
+    try {
+      // Fetch data about all people from the API
+      const allPeople = await this.starWarsApiService.fetchDataFromSwApi("https://swapi.dev/api/people/");
+
+      // Filter only the people from the unique list of URLs
+      const filteredPeople = allPeople.filter(person => urls.includes(person.url));
+
+      // Create a list of names of filtered people
+      const namesOfFilteredPeople = filteredPeople.map(person => person.name);
+      console.log(namesOfFilteredPeople);
+      return namesOfFilteredPeople;
+    } catch (error) {
+      console.error('An error occurred while fetching data from the API:', error);
+      throw error;
+    }
+  };
+
+
+
+  private findMostFrequentCharacter(openingCrawls: string[], namesOfFilteredPeople: string[]): Record<string, number> {
+    const characterCounts: Record<string, number> = {};
+
+    openingCrawls.forEach((crawl) => {
+      namesOfFilteredPeople.forEach((characterName) => {
+        const regex = new RegExp(`\\b${characterName}\\b`, 'gi');
+        const characterMatches = crawl.match(regex);
+        if (characterMatches) {
+          characterCounts[characterName] = (characterCounts[characterName] || 0) + characterMatches.length;
+        }
+      });
+    });
+
+    return characterCounts;
+  }
+
 
 
 }
