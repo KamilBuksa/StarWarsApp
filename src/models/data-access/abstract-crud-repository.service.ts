@@ -18,7 +18,7 @@ import { ApiModel } from '../api.model';
  * T - entity class
  */
 export abstract class AbstractCrudRepositoryService<T> {
-  constructor(private readonly _repository: Repository<T>) {}
+  constructor(private readonly _repository: Repository<T>) { }
 
   protected _preparePaginatedResponse(
     data: T[],
@@ -50,6 +50,9 @@ export abstract class AbstractCrudRepositoryService<T> {
 
   async saveMany(data: DeepPartial<T>[], options?: SaveOptions): Promise<T[]> {
     return this._repository.save(data, options);
+  }
+  async find(): Promise<T[]> {
+    return this._repository.find();
   }
 
   async update(

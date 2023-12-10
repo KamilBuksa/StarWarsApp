@@ -53,6 +53,9 @@ export class StarWarsController {
     summary: 'Show list of species.',
     description: 'Search by name',
   })
+  @UseInterceptors(HttpCacheInterceptor)
+  @CacheTTL(TTL_CONSTANTS.ONE_DAY)
+  @CacheKey(CACHE_KEYS.GET_SPECIES_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(SpeciesResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
@@ -68,6 +71,9 @@ export class StarWarsController {
     summary: 'Show list of vehicles.',
     description: 'Search by name, model',
   })
+  @UseInterceptors(HttpCacheInterceptor)
+  @CacheTTL(TTL_CONSTANTS.ONE_DAY)
+  @CacheKey(CACHE_KEYS.GET_VEHICLES_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(VehicleResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
@@ -83,6 +89,9 @@ export class StarWarsController {
     summary: 'Show list of starships.',
     description: 'Search by name, model',
   })
+  @UseInterceptors(HttpCacheInterceptor)
+  @CacheTTL(TTL_CONSTANTS.ONE_DAY)
+  @CacheKey(CACHE_KEYS.GET_STARSHIPS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(StarshipResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
@@ -98,6 +107,9 @@ export class StarWarsController {
     summary: 'Show list of planets.',
     description: 'Search by name',
   })
+  @UseInterceptors(HttpCacheInterceptor)
+  @CacheTTL(TTL_CONSTANTS.ONE_DAY)
+  @CacheKey(CACHE_KEYS.GET_PLANETS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(PlanetResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)

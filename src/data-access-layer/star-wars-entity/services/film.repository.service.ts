@@ -27,7 +27,6 @@ export class FilmRepositoryService extends AbstractCrudRepositoryService<FilmEnt
       );
     }
 
-
     const [data, totalCount]: [FilmEntity[], number] = await search
 
       .skip((filterData.page - 1) * filterData.limit)

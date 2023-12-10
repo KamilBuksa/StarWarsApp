@@ -117,4 +117,96 @@ export class StarWarsHelpersService {
     return planet;
   }
 
+  public updateOrCreateStarships(existingStarships: StarshipEntity[], starshipData: any[]): StarshipEntity[] {
+    const existingStarshipsObj = existingStarships.reduce((obj, starship) => {
+      obj[starship.url] = starship;
+      return obj;
+    }, {});
+
+    const updatedStarships = starshipData.map((starshipData: any) => {
+      const existingStarship = existingStarshipsObj[starshipData.url];
+      if (existingStarship) {
+        Object.assign(existingStarship, this.mapToStarshipEntity(starshipData));
+        return existingStarship;
+      } else {
+        return this.mapToStarshipEntity(starshipData);
+      }
+    });
+
+    return updatedStarships;
+  }
+
+  public updateOrCreateFilms(existingFilms: FilmEntity[], filmData: any[]): FilmEntity[] {
+    const existingFilmsObj = existingFilms.reduce((obj, film) => {
+      obj[film.url] = film;
+      return obj;
+    }, {});
+
+    const updatedFilms = filmData.map((filmData: any) => {
+      const existingFilm = existingFilmsObj[filmData.url];
+      if (existingFilm) {
+        Object.assign(existingFilm, this.mapToFilmEntity(filmData));
+        return existingFilm;
+      } else {
+        return this.mapToFilmEntity(filmData);
+      }
+    });
+
+    return updatedFilms;
+  }
+  public updateOrCreatePlanets(existingPlanets: PlanetEntity[], planetData: any[]): PlanetEntity[] {
+    const existingPlanetsObj = existingPlanets.reduce((obj, planet) => {
+      obj[planet.url] = planet;
+      return obj;
+    }, {});
+
+    const updatedPlanets = planetData.map((planetData: any) => {
+      const existingPlanet = existingPlanetsObj[planetData.url];
+      if (existingPlanet) {
+        Object.assign(existingPlanet, this.mapToPlanetEntity(planetData));
+        return existingPlanet;
+      } else {
+        return this.mapToPlanetEntity(planetData);
+      }
+    });
+
+    return updatedPlanets;
+  }
+  public updateOrCreateSpecies(existingSpecies: SpeciesEntity[], speciesData: any[]): SpeciesEntity[] {
+    const existingSpeciesObj = existingSpecies.reduce((obj, species) => {
+      obj[species.url] = species;
+      return obj;
+    }, {});
+
+    const updatedSpecies = speciesData.map((speciesData: any) => {
+      const existingSpecie = existingSpeciesObj[speciesData.url];
+      if (existingSpecie) {
+        Object.assign(existingSpecie, this.mapToSpeciesEntity(speciesData));
+        return existingSpecie;
+      } else {
+        return this.mapToSpeciesEntity(speciesData);
+      }
+    });
+
+    return updatedSpecies;
+  }
+  public updateOrCreateVehicles(existingVehicles: VehicleEntity[], vehicleData: any[]): VehicleEntity[] {
+    const existingVehiclesObj = existingVehicles.reduce((obj, vehicle) => {
+      obj[vehicle.url] = vehicle;
+      return obj;
+    }, {});
+
+    const updatedVehicles = vehicleData.map((vehicleData: any) => {
+      const existingVehicle = existingVehiclesObj[vehicleData.url];
+      if (existingVehicle) {
+        Object.assign(existingVehicle, this.mapToVehicleEntity(vehicleData));
+        return existingVehicle;
+      } else {
+        return this.mapToVehicleEntity(vehicleData);
+      }
+    });
+
+    return updatedVehicles;
+  }
+
 }
