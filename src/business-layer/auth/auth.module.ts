@@ -47,4 +47,4 @@ import { UserPasswordService } from './services/user-password.service';
   ],
   exports: [AuthHelpersService],
 })
-export class AuthModule {}
+export class AuthModule { }

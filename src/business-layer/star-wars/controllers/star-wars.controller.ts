@@ -134,4 +134,9 @@ export class StarWarsController {
     return await this._starWarsService.getUniqueWordsAndMostFrequentCharacter();
   }
 
+
+  getHello(): string {
+    return 'Hello World!';
+  }
+
 }
