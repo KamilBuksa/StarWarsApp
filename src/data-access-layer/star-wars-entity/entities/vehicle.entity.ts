@@ -51,12 +51,6 @@ export class VehicleEntity extends BaseEntity {
     @Column('simple-array', { nullable: true })
     films: string[];
 
-    @CreateDateColumn()
-    created: string;
-
-    @UpdateDateColumn()
-    edited: string;
-
     @Column({ type: 'varchar', length: 255 })
     url: string;
 

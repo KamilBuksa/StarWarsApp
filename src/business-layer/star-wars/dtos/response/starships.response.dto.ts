@@ -1,3 +1,5 @@
+import { StarshipEntity } from "../../../../data-access-layer/star-wars-entity/entities/starship.entity";
+
 export class StarshipResponseDTO {
   name: string;
   model: string;
@@ -14,28 +16,28 @@ export class StarshipResponseDTO {
   starshipClass: string;
   pilots: string[];
   films: string[];
-  created: string;
-  edited: string;
+  createdAt: Date;
+  modifiedAt: Date;
   url: string;
 
-  constructor(starship: any) {
+  constructor(starship: StarshipEntity) {
     this.name = starship.name;
     this.model = starship.model;
     this.manufacturer = starship.manufacturer;
-    this.costInCredits = starship.cost_in_credits;
+    this.costInCredits = starship.costInCredits;
     this.length = starship.length;
-    this.maxAtmospheringSpeed = starship.max_atmosphering_speed;
+    this.maxAtmospheringSpeed = starship.maxAtmospheringSpeed;
     this.crew = starship.crew;
     this.passengers = starship.passengers;
-    this.cargoCapacity = starship.cargo_capacity;
+    this.cargoCapacity = starship.cargoCapacity;
     this.consumables = starship.consumables;
-    this.hyperdriveRating = starship.hyperdrive_rating;
+    this.hyperdriveRating = starship.hyperdriveRating;
     this.MGLT = starship.MGLT;
-    this.starshipClass = starship.starship_class;
+    this.starshipClass = starship.starshipClass;
     this.pilots = starship.pilots;
     this.films = starship.films;
-    this.created = starship.created;
-    this.edited = starship.edited;
+    this.createdAt = starship.createdAt;
+    this.modifiedAt = starship.modifiedAt;
     this.url = starship.url;
   }
 }

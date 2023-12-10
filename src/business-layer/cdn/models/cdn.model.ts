@@ -72,7 +72,7 @@ export namespace CDNModel {
   export class FileResponseDTO {
     id: string;
     originalname: string;
-    createdAt: string;
+    createdAt: Date;
     type: FILE_TYPE;
     url: string;
     order: number;

@@ -14,12 +14,12 @@ export class BaseEntity extends BaseEntityTypeOrm {
   @CreateDateColumn({
     type: 'timestamp',
   })
-  createdAt: string;
+  createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
   })
-  modifiedAt: string;
+  modifiedAt: Date;
 }
 
 // @DeleteDateColumn()

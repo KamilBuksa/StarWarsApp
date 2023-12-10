@@ -1,3 +1,5 @@
+import { PlanetEntity } from "../../../../data-access-layer/star-wars-entity/entities/planet.entity";
+
 export class PlanetResponseDTO {
   name: string;
   rotationPeriod: string;
@@ -10,24 +12,24 @@ export class PlanetResponseDTO {
   population: string;
   residents: string[];
   films: string[];
-  created: string;
-  edited: string;
+  createdAt: Date;
+  modifiedAt: Date;
   url: string;
 
-  constructor(planet: any) {
+  constructor(planet: PlanetEntity) {
     this.name = planet.name;
-    this.rotationPeriod = planet.rotation_period;
-    this.orbitalPeriod = planet.orbital_period;
+    this.rotationPeriod = planet.rotationPeriod;
+    this.orbitalPeriod = planet.orbitalPeriod;
     this.diameter = planet.diameter;
     this.climate = planet.climate;
     this.gravity = planet.gravity;
     this.terrain = planet.terrain;
-    this.surfaceWater = planet.surface_water;
+    this.surfaceWater = planet.surfaceWater;
     this.population = planet.population;
     this.residents = planet.residents;
     this.films = planet.films;
-    this.created = planet.created;
-    this.edited = planet.edited;
+    this.createdAt = planet.createdAt;
+    this.modifiedAt = planet.modifiedAt;
     this.url = planet.url;
   }
 }

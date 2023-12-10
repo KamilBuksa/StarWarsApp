@@ -1,4 +1,7 @@
+import { SpeciesEntity } from "../../../../data-access-layer/star-wars-entity/entities/specie.entity";
+
 export class SpeciesResponseDTO {
+  id: string;
   name: string;
   classification: string;
   designation: string;
@@ -11,25 +14,27 @@ export class SpeciesResponseDTO {
   language: string;
   people: string[];
   films: string[];
-  created: string;
-  edited: string;
+  createdAt: Date;
+  modifiedAt: Date;
   url: string;
 
-  constructor(species: any) {
+
+  constructor(species: SpeciesEntity) {
+    this.id = species.id;
     this.name = species.name;
     this.classification = species.classification;
     this.designation = species.designation;
-    this.averageHeight = species.average_height;
-    this.skinColors = species.skin_colors;
-    this.hairColors = species.hair_colors;
-    this.eyeColors = species.eye_colors;
-    this.averageLifespan = species.average_lifespan;
+    this.averageHeight = species.averageHeight;
+    this.skinColors = species.skinColors;
+    this.hairColors = species.hairColors;
+    this.eyeColors = species.eyeColors;
+    this.averageLifespan = species.averageLifespan;
     this.homeworld = species.homeworld;
     this.language = species.language;
     this.people = species.people;
     this.films = species.films;
-    this.created = species.created;
-    this.edited = species.edited;
+    this.createdAt = species.createdAt;
+    this.modifiedAt = species.modifiedAt;
     this.url = species.url;
   }
 }

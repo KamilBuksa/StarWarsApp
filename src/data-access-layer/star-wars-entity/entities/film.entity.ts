@@ -21,7 +21,7 @@ export class FilmEntity extends BaseEntity {
     @Column({ type: 'text' })
     openingCrawl: string;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     director: string;
 
     @Column({ type: 'varchar', length: 255 })
@@ -45,11 +45,6 @@ export class FilmEntity extends BaseEntity {
     @Column('simple-array', { nullable: true })
     species: string[];
 
-    @CreateDateColumn()
-    created: string;
-
-    @UpdateDateColumn()
-    edited: string;
 
     @Column({ type: 'varchar', length: 255 })
     url: string;

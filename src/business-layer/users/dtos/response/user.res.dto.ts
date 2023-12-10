@@ -7,8 +7,8 @@ import { LanguageModel } from '../../../i18n/model/language.model';
 // +
 export class ShortUserResponseDTO {
   id: string;
-  createdAt: string;
-  modifiedAt: string;
+  createdAt: Date;
+  modifiedAt: Date;
   lastActivityDate: Date;
   name: string;
   surname: string;

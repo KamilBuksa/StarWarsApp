@@ -9,12 +9,12 @@ import {
 export class HttpCacheInterceptor extends CacheInterceptor {
   trackBy(context: ExecutionContext): string | undefined {
     const request = context.switchToHttp().getRequest();
-    const pageParam = request.query.page;
-    const isPageWithinLimit =
-      pageParam && !isNaN(pageParam) && Number(pageParam) <= 3;
     const hasSearchParam = 'query' in request.query;
-
-    if (hasSearchParam || !isPageWithinLimit) {
+    const hasSearchParam2 = 'search' in request.query;
+    console.log(hasSearchParam);
+    console.log(hasSearchParam2);
+    if (hasSearchParam || hasSearchParam2) {
+      console.log('do not cache');
       //en: If the request contains the 'search' parameter or the 'page' parameter is greater than 5,
       // do not return the cache key, which will cause the data to not be cached.
       return undefined;

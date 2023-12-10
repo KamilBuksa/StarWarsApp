@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../../../data-access-layer/user-entity/entities/enums/user.roles';
@@ -20,17 +20,24 @@ import { SpeciesResponseDTO } from '../dtos/response/species.response.dto';
 import { StarshipResponseDTO } from '../dtos/response/starships.response.dto';
 import { VehicleResponseDTO } from '../dtos/response/vehicles.response.dto';
 import { StarWarsService } from '../services/star-wars.service';
+import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { CACHE_KEYS } from '../../cache/constants/cache.keys';
+import { TTL_CONSTANTS } from '../../cache/constants/ttl.constants';
+import { HttpCacheInterceptor } from '../../cache/cache.interceptor';
 
 @ApiBearerAuth()
 @ApiTags('Star Wars')
 @Controller('/star-wars')
 export class StarWarsController {
-  constructor(private readonly _starWarsService: StarWarsService) {}
+  constructor(private readonly _starWarsService: StarWarsService) { }
 
   @ApiOperation({
     summary: 'Show list of films',
     description: 'Search by title',
   })
+  @UseInterceptors(HttpCacheInterceptor)
+  @CacheTTL(TTL_CONSTANTS.ONE_DAY)
+  @CacheKey(CACHE_KEYS.GET_FILMS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(FilmResponseDTO)
   @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
