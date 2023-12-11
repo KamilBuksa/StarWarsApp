@@ -11,10 +11,29 @@ import { StarshipRepositoryService } from './services/starship.repository.servic
 import { VehicleRepositoryService } from './services/vehicle.repository.service';
 import { PlanetRepositoryService } from './services/planet.repository.service';
 
-
 @Module({
-  imports: [TypeOrmModule.forFeature([FilmEntity, SpeciesEntity, VehicleEntity, StarshipEntity, PlanetEntity])],
-  providers: [FilmRepositoryService, SpeciesRepositoryService, VehicleRepositoryService, StarshipRepositoryService, PlanetRepositoryService],
-  exports: [FilmRepositoryService, SpeciesRepositoryService, VehicleRepositoryService, StarshipRepositoryService, PlanetRepositoryService],
+  imports: [
+    TypeOrmModule.forFeature([
+      FilmEntity,
+      SpeciesEntity,
+      VehicleEntity,
+      StarshipEntity,
+      PlanetEntity,
+    ]),
+  ],
+  providers: [
+    FilmRepositoryService,
+    SpeciesRepositoryService,
+    VehicleRepositoryService,
+    StarshipRepositoryService,
+    PlanetRepositoryService,
+  ],
+  exports: [
+    FilmRepositoryService,
+    SpeciesRepositoryService,
+    VehicleRepositoryService,
+    StarshipRepositoryService,
+    PlanetRepositoryService,
+  ],
 })
-export class StarWarsEntityModule { }
+export class StarWarsEntityModule {}

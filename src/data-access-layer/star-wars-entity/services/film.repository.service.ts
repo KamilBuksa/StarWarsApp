@@ -15,8 +15,7 @@ export class FilmRepositoryService extends AbstractCrudRepositoryService<FilmEnt
   async findAllPaginatedFilms(
     filterData: StarWarsFilmsQuery,
   ): Promise<ApiModel.PaginatedResponse<FilmEntity>> {
-    let search = this._filmRepository
-      .createQueryBuilder('film')
+    let search = this._filmRepository.createQueryBuilder('film');
 
     if (filterData.search) {
       search = search.andWhere(
@@ -35,5 +34,12 @@ export class FilmRepositoryService extends AbstractCrudRepositoryService<FilmEnt
       .getManyAndCount();
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
+  }
+
+  async getAllOpeningCrawls(): Promise<string[]> {
+    const films = await this._filmRepository.find({
+      select: ['openingCrawl'],
+    });
+    return films.map((film) => film.openingCrawl);
   }
 }

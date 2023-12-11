@@ -21,15 +21,4 @@ export class DefaultSelectFields {
     'user.isAccountVerified',
     'user.createdAt',
   ];
-
-  static filesSelectFields: string[] = [
-    'files.id',
-    'files.createdAt',
-    'files.modifiedAt',
-    'files.originalname',
-    'files.type',
-    'files.order',
-    'files.contentType',
-    'files.status',
-  ];
 }

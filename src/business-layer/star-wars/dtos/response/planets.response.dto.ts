@@ -1,4 +1,4 @@
-import { PlanetEntity } from "../../../../data-access-layer/star-wars-entity/entities/planet.entity";
+import { PlanetEntity } from '../../../../data-access-layer/star-wars-entity/entities/planet.entity';
 
 export class PlanetResponseDTO {
   name: string;

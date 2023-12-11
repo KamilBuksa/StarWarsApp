@@ -1,4 +1,4 @@
-import { SpeciesEntity } from "../../../../data-access-layer/star-wars-entity/entities/specie.entity";
+import { SpeciesEntity } from '../../../../data-access-layer/star-wars-entity/entities/specie.entity';
 
 export class SpeciesResponseDTO {
   id: string;
@@ -17,7 +17,6 @@ export class SpeciesResponseDTO {
   createdAt: Date;
   modifiedAt: Date;
   url: string;
-
 
   constructor(species: SpeciesEntity) {
     this.id = species.id;

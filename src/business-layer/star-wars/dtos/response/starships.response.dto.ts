@@ -1,4 +1,4 @@
-import { StarshipEntity } from "../../../../data-access-layer/star-wars-entity/entities/starship.entity";
+import { StarshipEntity } from '../../../../data-access-layer/star-wars-entity/entities/starship.entity';
 
 export class StarshipResponseDTO {
   name: string;

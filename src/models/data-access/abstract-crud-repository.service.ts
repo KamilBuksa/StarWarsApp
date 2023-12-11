@@ -18,7 +18,7 @@ import { ApiModel } from '../api.model';
  * T - entity class
  */
 export abstract class AbstractCrudRepositoryService<T> {
-  constructor(private readonly _repository: Repository<T>) { }
+  constructor(private readonly _repository: Repository<T>) {}
 
   protected _preparePaginatedResponse(
     data: T[],
@@ -53,6 +53,14 @@ export abstract class AbstractCrudRepositoryService<T> {
   }
   async find(): Promise<T[]> {
     return this._repository.find();
+  }
+
+  async findOneByApiId(apiId: number): Promise<T> {
+    const query = this._repository
+      .createQueryBuilder('entity')
+      .where('entity.apiId = :apiId', { apiId });
+
+    return await query.getOne();
   }
 
   async update(

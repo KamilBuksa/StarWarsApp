@@ -1,4 +1,4 @@
-import { FilmEntity } from "../../../../data-access-layer/star-wars-entity/entities/film.entity";
+import { FilmEntity } from '../../../../data-access-layer/star-wars-entity/entities/film.entity';
 
 export class FilmResponseDTO {
   id: string;

@@ -131,3 +131,7 @@ export const sortArrayByCreatedAt = (array: any[]): any[] => {
 export const isProduction = (): boolean => {
   return process.env.NODE_ENV === 'production';
 };
+
+export const removeDuplicates = <T>(arr: T[]): T[] => {
+  return arr.filter((value, index, self) => self.indexOf(value) === index);
+};

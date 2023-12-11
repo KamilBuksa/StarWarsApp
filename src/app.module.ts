@@ -33,8 +33,8 @@ import { GlobalModule } from './global.module';
         DEFAULT_APP_LANGUAGE: Joi.string().default(
           LanguageModel.DEFAULT_LANGUAGE,
         ),
-        SWAGGER_ADMIN_PASS: Joi.string().required(),
-        SWAGGER_ADMIN_NAME: Joi.string().required(),
+        SWAGGER_ADMIN_PASS: Joi.string().default('admin'),
+        SWAGGER_ADMIN_NAME: Joi.string().default('admin'),
         AUTH_ACCESS_TOKEN_EXPIRES_IN: Joi.string().default('10d'),
       }),
       envFilePath: `./environments/${process.env.NODE_ENV || ''}.env`,

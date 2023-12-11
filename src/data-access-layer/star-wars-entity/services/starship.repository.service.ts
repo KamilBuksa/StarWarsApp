@@ -15,8 +15,7 @@ export class StarshipRepositoryService extends AbstractCrudRepositoryService<Sta
   async findAllPaginatedStarships(
     filterData: StarWarsStarshipsQuery,
   ): Promise<ApiModel.PaginatedResponse<StarshipEntity>> {
-    let search = this._starshipRepository
-      .createQueryBuilder('starship');
+    let search = this._starshipRepository.createQueryBuilder('starship');
 
     if (filterData.search) {
       search = search.andWhere(
@@ -35,5 +34,4 @@ export class StarshipRepositoryService extends AbstractCrudRepositoryService<Sta
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
   }
-
 }

@@ -7,11 +7,8 @@ import { VehicleEntity } from '../../../data-access-layer/star-wars-entity/entit
 
 @Injectable()
 export class StarWarsHelpersService {
-  constructor(
-
-
-  ) { }
-  public mapToFilmEntity(filmData: any): FilmEntity {
+  constructor() {}
+  public mapToFilmEntity(filmData: any, apiId: number): FilmEntity {
     const film = new FilmEntity();
     film.title = filmData.title;
     film.episodeId = filmData.episode_id;
@@ -29,11 +26,12 @@ export class StarWarsHelpersService {
     film.createdAt = new Date(filmData.created);
     film.modifiedAt = new Date(filmData.edited);
     film.url = filmData.url;
+    film.apiId = apiId;
 
     return film;
   }
 
-  public mapToSpeciesEntity(speciesData: any): SpeciesEntity {
+  public mapToSpeciesEntity(speciesData: any, apiId: number): SpeciesEntity {
     const species = new SpeciesEntity();
     species.name = speciesData.name;
     species.classification = speciesData.classification;
@@ -50,11 +48,11 @@ export class StarWarsHelpersService {
     species.createdAt = new Date(speciesData.created);
     species.modifiedAt = new Date(speciesData.edited);
     species.url = speciesData.url;
+    species.apiId = apiId;
     return species;
   }
 
-
-  public mapToVehicleEntity(vehicleData: any): VehicleEntity {
+  public mapToVehicleEntity(vehicleData: any, apiId: number): VehicleEntity {
     const vehicle = new VehicleEntity();
     vehicle.name = vehicleData.name;
     vehicle.model = vehicleData.model;
@@ -72,10 +70,11 @@ export class StarWarsHelpersService {
     vehicle.createdAt = new Date(vehicleData.created);
     vehicle.modifiedAt = new Date(vehicleData.edited);
     vehicle.url = vehicleData.url;
+    vehicle.apiId = apiId;
     return vehicle;
   }
 
-  public mapToStarshipEntity(starshipData: any): StarshipEntity {
+  public mapToStarshipEntity(starshipData: any, apiId: number): StarshipEntity {
     const starship = new StarshipEntity();
     starship.name = starshipData.name;
     starship.model = starshipData.model;
@@ -95,10 +94,11 @@ export class StarWarsHelpersService {
     starship.createdAt = new Date(starshipData.created);
     starship.modifiedAt = new Date(starshipData.edited);
     starship.url = starshipData.url;
+    starship.apiId = apiId;
     return starship;
   }
 
-  public mapToPlanetEntity(planetData: any): PlanetEntity {
+  public mapToPlanetEntity(planetData: any, apiId: number): PlanetEntity {
     const planet = new PlanetEntity();
     planet.name = planetData.name;
     planet.rotationPeriod = planetData.rotation_period;
@@ -114,99 +114,139 @@ export class StarWarsHelpersService {
     planet.createdAt = new Date(planetData.created);
     planet.modifiedAt = new Date(planetData.edited);
     planet.url = planetData.url;
+    planet.apiId = apiId;
     return planet;
   }
 
-  public updateOrCreateStarships(existingStarships: StarshipEntity[], starshipData: any[]): StarshipEntity[] {
+  public updateOrCreateStarships(
+    existingStarships: StarshipEntity[],
+    starshipData: any[],
+    apiId?: number,
+  ): StarshipEntity[] {
     const existingStarshipsObj = existingStarships.reduce((obj, starship) => {
       obj[starship.url] = starship;
       return obj;
     }, {});
 
-    const updatedStarships = starshipData.map((starshipData: any) => {
+    const updatedStarships = starshipData.map((starshipData: any, i) => {
+      let setApiId = apiId ? apiId : ++i;
+
       const existingStarship = existingStarshipsObj[starshipData.url];
       if (existingStarship) {
-        Object.assign(existingStarship, this.mapToStarshipEntity(starshipData));
+        Object.assign(
+          existingStarship,
+          this.mapToStarshipEntity(starshipData, setApiId),
+        );
         return existingStarship;
       } else {
-        return this.mapToStarshipEntity(starshipData);
+        return this.mapToStarshipEntity(starshipData, setApiId);
       }
     });
 
     return updatedStarships;
   }
 
-  public updateOrCreateFilms(existingFilms: FilmEntity[], filmData: any[]): FilmEntity[] {
+  public updateOrCreateFilms(
+    existingFilms: FilmEntity[],
+    filmData: any[],
+    apiId?: number,
+  ): FilmEntity[] {
     const existingFilmsObj = existingFilms.reduce((obj, film) => {
       obj[film.url] = film;
       return obj;
     }, {});
 
-    const updatedFilms = filmData.map((filmData: any) => {
+    const updatedFilms = filmData.map((filmData: any, i) => {
+      let setApiId = apiId ? apiId : ++i;
       const existingFilm = existingFilmsObj[filmData.url];
+
       if (existingFilm) {
-        Object.assign(existingFilm, this.mapToFilmEntity(filmData));
+        Object.assign(existingFilm, this.mapToFilmEntity(filmData, setApiId));
         return existingFilm;
       } else {
-        return this.mapToFilmEntity(filmData);
+        return this.mapToFilmEntity(filmData, setApiId);
       }
     });
 
     return updatedFilms;
   }
-  public updateOrCreatePlanets(existingPlanets: PlanetEntity[], planetData: any[]): PlanetEntity[] {
+  public updateOrCreatePlanets(
+    existingPlanets: PlanetEntity[],
+    planetData: any[],
+    apiId?: number,
+  ): PlanetEntity[] {
     const existingPlanetsObj = existingPlanets.reduce((obj, planet) => {
       obj[planet.url] = planet;
       return obj;
     }, {});
 
-    const updatedPlanets = planetData.map((planetData: any) => {
+    const updatedPlanets = planetData.map((planetData: any, i) => {
+      let setApiId = apiId ? apiId : ++i;
       const existingPlanet = existingPlanetsObj[planetData.url];
       if (existingPlanet) {
-        Object.assign(existingPlanet, this.mapToPlanetEntity(planetData));
+        Object.assign(
+          existingPlanet,
+          this.mapToPlanetEntity(planetData, setApiId),
+        );
         return existingPlanet;
       } else {
-        return this.mapToPlanetEntity(planetData);
+        return this.mapToPlanetEntity(planetData, setApiId);
       }
     });
 
     return updatedPlanets;
   }
-  public updateOrCreateSpecies(existingSpecies: SpeciesEntity[], speciesData: any[]): SpeciesEntity[] {
+  public updateOrCreateSpecies(
+    existingSpecies: SpeciesEntity[],
+    speciesData: any[],
+    apiId?: number,
+  ): SpeciesEntity[] {
     const existingSpeciesObj = existingSpecies.reduce((obj, species) => {
       obj[species.url] = species;
       return obj;
     }, {});
 
-    const updatedSpecies = speciesData.map((speciesData: any) => {
+    const updatedSpecies = speciesData.map((speciesData: any, i) => {
+      let setApiId = apiId ? apiId : ++i;
+
       const existingSpecie = existingSpeciesObj[speciesData.url];
       if (existingSpecie) {
-        Object.assign(existingSpecie, this.mapToSpeciesEntity(speciesData));
+        Object.assign(
+          existingSpecie,
+          this.mapToSpeciesEntity(speciesData, setApiId),
+        );
         return existingSpecie;
       } else {
-        return this.mapToSpeciesEntity(speciesData);
+        return this.mapToSpeciesEntity(speciesData, setApiId);
       }
     });
 
     return updatedSpecies;
   }
-  public updateOrCreateVehicles(existingVehicles: VehicleEntity[], vehicleData: any[]): VehicleEntity[] {
+  public updateOrCreateVehicles(
+    existingVehicles: VehicleEntity[],
+    vehicleData: any[],
+    apiId?: number,
+  ): VehicleEntity[] {
     const existingVehiclesObj = existingVehicles.reduce((obj, vehicle) => {
       obj[vehicle.url] = vehicle;
       return obj;
     }, {});
 
-    const updatedVehicles = vehicleData.map((vehicleData: any) => {
+    const updatedVehicles = vehicleData.map((vehicleData: any, i) => {
+      let setApiId = apiId ? apiId : ++i;
       const existingVehicle = existingVehiclesObj[vehicleData.url];
       if (existingVehicle) {
-        Object.assign(existingVehicle, this.mapToVehicleEntity(vehicleData));
+        Object.assign(
+          existingVehicle,
+          this.mapToVehicleEntity(vehicleData, setApiId),
+        );
         return existingVehicle;
       } else {
-        return this.mapToVehicleEntity(vehicleData);
+        return this.mapToVehicleEntity(vehicleData, setApiId);
       }
     });
 
     return updatedVehicles;
   }
-
 }

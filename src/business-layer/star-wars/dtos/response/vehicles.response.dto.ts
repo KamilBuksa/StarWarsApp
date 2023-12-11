@@ -1,4 +1,4 @@
-import { VehicleEntity } from "../../../../data-access-layer/star-wars-entity/entities/vehicle.entity";
+import { VehicleEntity } from '../../../../data-access-layer/star-wars-entity/entities/vehicle.entity';
 
 export class VehicleResponseDTO {
   name: string;

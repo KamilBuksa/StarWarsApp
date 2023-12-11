@@ -15,8 +15,7 @@ export class SpeciesRepositoryService extends AbstractCrudRepositoryService<Spec
   async findAllPaginatedSpecies(
     filterData: StarWarsSpeciesQuery,
   ): Promise<ApiModel.PaginatedResponse<SpeciesEntity>> {
-    let search = this._speciesRepository
-      .createQueryBuilder('species');
+    let search = this._speciesRepository.createQueryBuilder('species');
 
     if (filterData.search) {
       search = search.andWhere(
@@ -35,5 +34,4 @@ export class SpeciesRepositoryService extends AbstractCrudRepositoryService<Spec
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
   }
-
 }

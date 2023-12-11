@@ -12,7 +12,7 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     const hasSearchParam = 'query' in request.query;
     const hasSearchParam2 = 'search' in request.query;
 
-    // uncoment this to disable caching for search and query 
+    // uncoment this to disable caching for search and query
     // if (hasSearchParam || hasSearchParam2) {
     //   console.log('do not cache');
     //   return undefined;
@@ -22,6 +22,12 @@ export class HttpCacheInterceptor extends CacheInterceptor {
       CACHE_KEY_METADATA,
       context.getHandler(),
     );
+
+    const { id } = request.params;
+
+    if (id) {
+      return `${cacheKey}-${id}`;
+    }
 
     if (cacheKey) {
       return `${cacheKey}-${request._parsedUrl.query}`;
