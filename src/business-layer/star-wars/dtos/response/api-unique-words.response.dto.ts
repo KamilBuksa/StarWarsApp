@@ -6,7 +6,6 @@ export class ApiUniqueWordsResponse {
         example: {
             "Turmoil has": 1,
             "has engulfed": 1,
-            // ... inne pary słów
         }
     })
     uniqueWordPairsAndOccurrences: Record<string, number>;
@@ -15,7 +14,6 @@ export class ApiUniqueWordsResponse {
         example: {
             "Luke Skywalker": 2,
             "Darth Vader": 1,
-            // ... inne postacie
         }
     })
     mostFrequentCharacters: Record<string, number>;

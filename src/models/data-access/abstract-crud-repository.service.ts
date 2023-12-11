@@ -55,6 +55,14 @@ export abstract class AbstractCrudRepositoryService<T> {
     return this._repository.find();
   }
 
+  async findOneByApiId(apiId: number): Promise<T> {
+    const query = this._repository
+      .createQueryBuilder('entity')
+      .where('entity.apiId = :apiId', { apiId });
+
+    return await query.getOne();
+  }
+
   async update(
     id: string | FindOptionsWhere<T>,
     data: QueryDeepPartialEntity<T>,

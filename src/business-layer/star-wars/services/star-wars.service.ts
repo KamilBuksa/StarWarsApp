@@ -37,8 +37,7 @@ export class StarWarsService {
   ): Promise<ApiModel.PaginatedResponse<FilmResponseDTO>> {
     let api = `https://swapi.dev/api/films`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
-
+    const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
     const existingFilms = await this.filmRepository.find();
     const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms(existingFilms, results);
     await this.filmRepository.saveMany(updatedFilms);
@@ -58,12 +57,29 @@ export class StarWarsService {
     };
   }
 
+  async getFilmDetails(
+    id: number
+  ): Promise<FilmResponseDTO> {
+    let api = `https://swapi.dev/api/films/${id}/`;
+
+    let result = await this.filmRepository.findOneByApiId(id);
+    if (!result) {
+      // ask api
+      const filmApi = await this.starWarsApiService.fetchDataFromSwApi(api);
+      if (filmApi) {
+        const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms([], [filmApi], id);
+        [result] = await this.filmRepository.saveMany(updatedFilms);
+      }
+    }
+    return new FilmResponseDTO(result);
+  }
+
   async getSpecies(
     query: StarWarsSpeciesQuery,
   ): Promise<ApiModel.PaginatedResponse<SpeciesResponseDTO>> {
     let api = `https://swapi.dev/api/species`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
+    const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingSpecies = await this.speciesRepository.find();
     const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies(existingSpecies, results);
@@ -83,12 +99,30 @@ export class StarWarsService {
     };
   }
 
+  async getSpeciesDetails(
+    id: number
+  ): Promise<SpeciesResponseDTO> {
+    let api = `https://swapi.dev/api/species/${id}/`;
+
+    let result = await this.speciesRepository.findOneByApiId(id);
+    if (!result) {
+      // ask api
+      const speciesApi = await this.starWarsApiService.fetchDataFromSwApi(api);
+      if (speciesApi) {
+        const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies([], [speciesApi], id);
+        [result] = await this.speciesRepository.saveMany(updatedSpecies);
+      }
+    }
+    return new SpeciesResponseDTO(result);
+  }
+
+
   async getVehicles(
     query: StarWarsVehiclesQuery,
   ): Promise<ApiModel.PaginatedResponse<VehicleResponseDTO>> {
     let api = `https://swapi.dev/api/vehicles`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
+    const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingVehicles = await this.vehicleRepository.find();
     const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles(existingVehicles, results);
@@ -109,13 +143,29 @@ export class StarWarsService {
     };
 
   }
+  async getVehicleDetails(
+    id: number
+  ): Promise<VehicleResponseDTO> {
+    let api = `https://swapi.dev/api/vehicles/${id}/`;
+
+    let result = await this.vehicleRepository.findOneByApiId(id);
+    if (!result) {
+      // ask api
+      const vehicleApi = await this.starWarsApiService.fetchDataFromSwApi(api);
+      if (vehicleApi) {
+        const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles([], [vehicleApi], id);
+        [result] = await this.vehicleRepository.saveMany(updatedVehicles);
+      }
+    }
+    return new VehicleResponseDTO(result);
+  }
 
   async getStarships(
     query: StarWarsStarshipsQuery,
   ): Promise<ApiModel.PaginatedResponse<StarshipResponseDTO>> {
     let api = `https://swapi.dev/api/starships`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
+    const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingStarships = await this.starshipRepository.find();
     const updatedStarships = this.StarWarsHelpersService.updateOrCreateStarships(existingStarships, results);
@@ -135,13 +185,29 @@ export class StarWarsService {
     };
 
   }
+  async getStarshipDetails(
+    id: number
+  ): Promise<StarshipResponseDTO> {
+    let api = `https://swapi.dev/api/starships/${id}/`;
+
+    let result = await this.starshipRepository.findOneByApiId(id);
+    if (!result) {
+      // ask api
+      const starshipApi = await this.starWarsApiService.fetchDataFromSwApi(api);
+      if (starshipApi) {
+        const updatedStarships = this.StarWarsHelpersService.updateOrCreateStarships([], [starshipApi], id);
+        [result] = await this.starshipRepository.saveMany(updatedStarships);
+      }
+    }
+    return new StarshipResponseDTO(result);
+  }
 
   async getPlanets(
     query: StarWarsPlanetsQuery,
   ): Promise<ApiModel.PaginatedResponse<PlanetResponseDTO>> {
     let api = `https://swapi.dev/api/planets`;
 
-    const results = await this.starWarsApiService.fetchDataFromSwApi(api);
+    const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingPlanets = await this.planetRepository.find();
     const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets(existingPlanets, results);
@@ -161,6 +227,22 @@ export class StarWarsService {
       data,
     };
 
+  }
+  async getPlanetDetails(
+    id: number
+  ): Promise<PlanetResponseDTO> {
+    let api = `https://swapi.dev/api/planets/${id}/`;
+
+    let result = await this.planetRepository.findOneByApiId(id);
+    if (!result) {
+      // ask api
+      const planetApi = await this.starWarsApiService.fetchDataFromSwApi(api);
+      if (planetApi) {
+        const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets([], [planetApi], id);
+        [result] = await this.planetRepository.saveMany(updatedPlanets);
+      }
+    }
+    return new PlanetResponseDTO(result);
   }
 
 
@@ -193,7 +275,6 @@ export class StarWarsService {
 
     openingCrawls.forEach((crawl) => {
       const words = crawl.split(/[\p{Cc}\p{Cf}\s]+/gu).filter(Boolean);
-      console.log(words);
       for (let i = 0; i < words.length - 1; i++) {
         const wordPair = `${words[i]} ${words[i + 1]}`;
         wordPairCounts[wordPair] = (wordPairCounts[wordPair] || 0) + 1;
@@ -208,7 +289,7 @@ export class StarWarsService {
   async fetchAndFilterPeople(urls: string[]) {
     try {
       // Fetch data about all people from the API
-      const allPeople = await this.starWarsApiService.fetchDataFromSwApi("https://swapi.dev/api/people/");
+      const { results: allPeople } = await this.starWarsApiService.fetchDataFromSwApi("https://swapi.dev/api/people/");
 
       // Filter only the people from the unique list of URLs
       const filteredPeople = allPeople.filter(person => urls.includes(person.url));

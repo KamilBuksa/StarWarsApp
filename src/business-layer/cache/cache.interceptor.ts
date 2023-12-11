@@ -23,6 +23,12 @@ export class HttpCacheInterceptor extends CacheInterceptor {
       context.getHandler(),
     );
 
+    const { id } = request.params;
+
+    if (id) {
+      return `${cacheKey}-${id}`;
+    }
+
     if (cacheKey) {
       return `${cacheKey}-${request._parsedUrl.query}`;
     }

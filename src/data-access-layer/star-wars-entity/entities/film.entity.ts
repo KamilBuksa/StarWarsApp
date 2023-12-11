@@ -1,9 +1,7 @@
 import {
     Column,
-    CreateDateColumn,
     DeleteDateColumn,
-    Entity,
-    UpdateDateColumn
+    Entity
 } from 'typeorm';
 import { BaseEntity } from '../../../models/entity/base-entity.entity';
 
@@ -50,4 +48,6 @@ export class FilmEntity extends BaseEntity {
     url: string;
 
 
+    @Column({ type: 'int', nullable: true })
+    apiId: number;
 }

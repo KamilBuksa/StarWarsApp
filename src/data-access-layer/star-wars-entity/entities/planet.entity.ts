@@ -1,9 +1,7 @@
 import {
     Column,
-    CreateDateColumn,
     DeleteDateColumn,
-    Entity,
-    UpdateDateColumn
+    Entity
 } from 'typeorm';
 import { BaseEntity } from '../../../models/entity/base-entity.entity';
 
@@ -48,5 +46,6 @@ export class PlanetEntity extends BaseEntity {
     @Column({ type: 'varchar', length: 255 })
     url: string;
 
-
+    @Column({ type: 'int', nullable: true })
+    apiId: number;
 }

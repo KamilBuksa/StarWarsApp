@@ -18,7 +18,7 @@ export class StarWarsApiService {
           }),
         ),
       );
-      return response.data.results;
+      return response.data;
     } catch (error) {
       throw error;
     }
