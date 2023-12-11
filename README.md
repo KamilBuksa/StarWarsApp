@@ -57,6 +57,16 @@ $ npm run start
 $ npm run start:dev 
 ```
 
+
+## Important Configuration Note
+
+#### TypeORM Synchronization Issue
+- **Initial Setup**: When running the application for the first time, set `NEST_SYNCHRONIZE` in the `.env` file to `true`. This will allow TypeORM to properly synchronize and create entities in the Docker container.
+- **Post-Initialization**: Once the entities have been successfully created in Docker, change `NEST_SYNCHRONIZE` in the `.env` file to `false`. This is important to prevent unintended database alterations during subsequent application starts.
+
+Failure to change `NEST_SYNCHRONIZE` back to `false` may lead to potential data inconsistencies or loss.
+
+
 ## Swagger Documentation Access
 
 #### Access Details
