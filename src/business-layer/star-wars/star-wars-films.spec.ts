@@ -16,8 +16,14 @@ describe('StarWarsService', () => {
       providers: [
         StarWarsService,
         { provide: FilmRepositoryService, useValue: jest.fn() },
-        { provide: StarWarsApiService, useValue: { fetchDataFromSwApi: jest.fn() } },
-        { provide: StarWarsHelpersService, useValue: { updateOrCreateFilms: jest.fn() } },
+        {
+          provide: StarWarsApiService,
+          useValue: { fetchDataFromSwApi: jest.fn() },
+        },
+        {
+          provide: StarWarsHelpersService,
+          useValue: { updateOrCreateFilms: jest.fn() },
+        },
       ],
     }).compile();
 
@@ -28,24 +34,24 @@ describe('StarWarsService', () => {
 
     starWarsApiService.fetchDataFromSwApi.mockResolvedValue(filmsMock);
 
-
     // filmRepositoryService.find.mockResolvedValue(filmsMockEntities);
     // filmRepositoryService.saveMany.mockImplementation(async (films) => films);
     // filmRepositoryService.findAllPaginatedFilms.mockResolvedValue(filmsMockPaginated);
   });
 
   it('should fetch films, update DB, and return paginated response', async () => {
-    const query = { /* parametry zapytania */ };
+    const query = {
+      /* parametry zapytania */
+    };
     const result = await starWarsService.getFilms(query);
 
     expect(result).toBeDefined();
-    expect(starWarsApiService.fetchDataFromSwApi).toHaveBeenCalledWith('https://swapi.dev/api/films');
+    expect(starWarsApiService.fetchDataFromSwApi).toHaveBeenCalledWith(
+      'https://swapi.dev/api/films',
+    );
     // expect(starWarsHelpersService.updateOrCreateFilms).toHaveBeenCalled();
     // expect(filmRepositoryService.find).toHaveBeenCalled();
     // expect(filmRepositoryService.saveMany).toHaveBeenCalled();
     // expect(filmRepositoryService.findAllPaginatedFilms).toHaveBeenCalledWith(query);
-
   });
-
-
 });

@@ -15,8 +15,7 @@ export class VehicleRepositoryService extends AbstractCrudRepositoryService<Vehi
   async findAllPaginatedVehicles(
     filterData: StarWarsVehiclesQuery,
   ): Promise<ApiModel.PaginatedResponse<VehicleEntity>> {
-    let search = this._vehicleRepository
-      .createQueryBuilder('vehicle');
+    let search = this._vehicleRepository.createQueryBuilder('vehicle');
 
     if (filterData.search) {
       search = search.andWhere(
@@ -35,5 +34,4 @@ export class VehicleRepositoryService extends AbstractCrudRepositoryService<Vehi
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
   }
-
 }

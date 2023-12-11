@@ -15,8 +15,7 @@ export class PlanetRepositoryService extends AbstractCrudRepositoryService<Plane
   async findAllPaginatedPlanets(
     filterData: StarWarsPlanetsQuery,
   ): Promise<ApiModel.PaginatedResponse<PlanetEntity>> {
-    let search = this._planetRepository
-      .createQueryBuilder('planet');
+    let search = this._planetRepository.createQueryBuilder('planet');
 
     if (filterData.search) {
       search = search.andWhere(
@@ -35,5 +34,4 @@ export class PlanetRepositoryService extends AbstractCrudRepositoryService<Plane
 
     return this._preparePaginatedResponse(data, totalCount, filterData);
   }
-
 }

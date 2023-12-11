@@ -1,5 +1,11 @@
-import { DataSource } from "typeorm";
-import { clearDB, getTestDataSource, getTestUser, getToken, req } from "../../../test/test-utils";
+import { DataSource } from 'typeorm';
+import {
+  clearDB,
+  getTestDataSource,
+  getTestUser,
+  getToken,
+  req,
+} from '../../../test/test-utils';
 
 describe('User Current', () => {
   let ds: DataSource;
@@ -15,12 +21,14 @@ describe('User Current', () => {
     await clearDB(ds);
   });
   it('GET /users/current should return current user', async () => {
-    console.log("DUPA");
+    console.log('DUPA');
 
     const user = await ds.manager.save(getTestUser({}));
 
-    const res = await req({ method: 'GET', route: '/users/current' })
-      .set('Authorization', getToken(user));
+    const res = await req({ method: 'GET', route: '/users/current' }).set(
+      'Authorization',
+      getToken(user),
+    );
     // console.log(res);
     // const res = await req({ method: 'GET', route: '/users/current' })
     console.log(res.body);
@@ -30,5 +38,4 @@ describe('User Current', () => {
     // console.log(user);
     expect(2).toBeDefined();
   });
-
 });

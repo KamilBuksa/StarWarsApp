@@ -21,5 +21,4 @@ export class DefaultSelectFields {
     'user.isAccountVerified',
     'user.createdAt',
   ];
-
 }

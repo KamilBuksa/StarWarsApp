@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class StarWarsApiService {
-  constructor(private readonly httpService: HttpService) { }
+  constructor(private readonly httpService: HttpService) {}
 
   async fetchDataFromSwApi(apiUrl: string) {
     try {
@@ -23,5 +23,4 @@ export class StarWarsApiService {
       throw error;
     }
   }
-
 }

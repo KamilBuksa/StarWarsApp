@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -31,10 +38,7 @@ import { IdParamDTO, IdParamNumberDTO } from '../../auth/dtos/request/id.dto';
 @ApiTags('Star Wars')
 @Controller('/star-wars')
 export class StarWarsController {
-  constructor(
-    private readonly _starWarsService: StarWarsService,
-
-  ) { }
+  constructor(private readonly _starWarsService: StarWarsService) {}
 
   @ApiOperation({
     summary: 'Show list of films',
@@ -61,9 +65,7 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_FILMS_DETAILS_CACHE_KEY)
   @Get('/films/:id')
-  async getFilmDetails(
-    @Param('id') id: number,
-  ): Promise<FilmResponseDTO> {
+  async getFilmDetails(@Param('id') id: number): Promise<FilmResponseDTO> {
     return await this._starWarsService.getFilmDetails(id);
   }
 
@@ -129,7 +131,6 @@ export class StarWarsController {
     return await this._starWarsService.getVehicleDetails(id);
   }
 
-
   @ApiOperation({
     summary: 'Show list of starships.',
     description: 'Search by name, model',
@@ -161,7 +162,6 @@ export class StarWarsController {
     return await this._starWarsService.getStarshipDetails(id);
   }
 
-
   @ApiOperation({
     summary: 'Show list of planets.',
     description: 'Search by name',
@@ -187,14 +187,15 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_PLANETS_DETAILS_CACHE_KEY)
   @Get('/planets/:id')
-  async getPlanetDetails(
-    @Param('id') id: number,
-  ): Promise<PlanetResponseDTO> {
+  async getPlanetDetails(@Param('id') id: number): Promise<PlanetResponseDTO> {
     return await this._starWarsService.getPlanetDetails(id);
   }
 
-
-  @ApiOperation({ summary: 'Find Unique Word Pairs and Their Occurrences', description: "This endpoint allows you to find unique word pairs and count their occurrences in text. Word pairs are separated by spaces or any number of control characters, and the result is a list of these pairs along with the count of their occurrences." })
+  @ApiOperation({
+    summary: 'Find Unique Word Pairs and Their Occurrences',
+    description:
+      'This endpoint allows you to find unique word pairs and count their occurrences in text. Word pairs are separated by spaces or any number of control characters, and the result is a list of these pairs along with the count of their occurrences.',
+  })
   // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
   // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @Get('unique-word-pairs')
@@ -202,9 +203,7 @@ export class StarWarsController {
     return await this._starWarsService.getUniqueWordsAndMostFrequentCharacter();
   }
 
-
   getHello(): string {
     return 'Hello World!';
   }
-
 }

@@ -7,10 +7,7 @@ import { VehicleEntity } from '../../../data-access-layer/star-wars-entity/entit
 
 @Injectable()
 export class StarWarsHelpersService {
-  constructor(
-
-
-  ) { }
+  constructor() {}
   public mapToFilmEntity(filmData: any, apiId: number): FilmEntity {
     const film = new FilmEntity();
     film.title = filmData.title;
@@ -54,7 +51,6 @@ export class StarWarsHelpersService {
     species.apiId = apiId;
     return species;
   }
-
 
   public mapToVehicleEntity(vehicleData: any, apiId: number): VehicleEntity {
     const vehicle = new VehicleEntity();
@@ -122,7 +118,11 @@ export class StarWarsHelpersService {
     return planet;
   }
 
-  public updateOrCreateStarships(existingStarships: StarshipEntity[], starshipData: any[], apiId?: number): StarshipEntity[] {
+  public updateOrCreateStarships(
+    existingStarships: StarshipEntity[],
+    starshipData: any[],
+    apiId?: number,
+  ): StarshipEntity[] {
     const existingStarshipsObj = existingStarships.reduce((obj, starship) => {
       obj[starship.url] = starship;
       return obj;
@@ -133,7 +133,10 @@ export class StarWarsHelpersService {
 
       const existingStarship = existingStarshipsObj[starshipData.url];
       if (existingStarship) {
-        Object.assign(existingStarship, this.mapToStarshipEntity(starshipData, setApiId));
+        Object.assign(
+          existingStarship,
+          this.mapToStarshipEntity(starshipData, setApiId),
+        );
         return existingStarship;
       } else {
         return this.mapToStarshipEntity(starshipData, setApiId);
@@ -143,7 +146,11 @@ export class StarWarsHelpersService {
     return updatedStarships;
   }
 
-  public updateOrCreateFilms(existingFilms: FilmEntity[], filmData: any[], apiId?: number): FilmEntity[] {
+  public updateOrCreateFilms(
+    existingFilms: FilmEntity[],
+    filmData: any[],
+    apiId?: number,
+  ): FilmEntity[] {
     const existingFilmsObj = existingFilms.reduce((obj, film) => {
       obj[film.url] = film;
       return obj;
@@ -163,7 +170,11 @@ export class StarWarsHelpersService {
 
     return updatedFilms;
   }
-  public updateOrCreatePlanets(existingPlanets: PlanetEntity[], planetData: any[], apiId?: number): PlanetEntity[] {
+  public updateOrCreatePlanets(
+    existingPlanets: PlanetEntity[],
+    planetData: any[],
+    apiId?: number,
+  ): PlanetEntity[] {
     const existingPlanetsObj = existingPlanets.reduce((obj, planet) => {
       obj[planet.url] = planet;
       return obj;
@@ -173,7 +184,10 @@ export class StarWarsHelpersService {
       let setApiId = apiId ? apiId : ++i;
       const existingPlanet = existingPlanetsObj[planetData.url];
       if (existingPlanet) {
-        Object.assign(existingPlanet, this.mapToPlanetEntity(planetData, setApiId));
+        Object.assign(
+          existingPlanet,
+          this.mapToPlanetEntity(planetData, setApiId),
+        );
         return existingPlanet;
       } else {
         return this.mapToPlanetEntity(planetData, setApiId);
@@ -182,7 +196,11 @@ export class StarWarsHelpersService {
 
     return updatedPlanets;
   }
-  public updateOrCreateSpecies(existingSpecies: SpeciesEntity[], speciesData: any[], apiId?: number): SpeciesEntity[] {
+  public updateOrCreateSpecies(
+    existingSpecies: SpeciesEntity[],
+    speciesData: any[],
+    apiId?: number,
+  ): SpeciesEntity[] {
     const existingSpeciesObj = existingSpecies.reduce((obj, species) => {
       obj[species.url] = species;
       return obj;
@@ -193,7 +211,10 @@ export class StarWarsHelpersService {
 
       const existingSpecie = existingSpeciesObj[speciesData.url];
       if (existingSpecie) {
-        Object.assign(existingSpecie, this.mapToSpeciesEntity(speciesData, setApiId));
+        Object.assign(
+          existingSpecie,
+          this.mapToSpeciesEntity(speciesData, setApiId),
+        );
         return existingSpecie;
       } else {
         return this.mapToSpeciesEntity(speciesData, setApiId);
@@ -202,7 +223,11 @@ export class StarWarsHelpersService {
 
     return updatedSpecies;
   }
-  public updateOrCreateVehicles(existingVehicles: VehicleEntity[], vehicleData: any[], apiId?: number): VehicleEntity[] {
+  public updateOrCreateVehicles(
+    existingVehicles: VehicleEntity[],
+    vehicleData: any[],
+    apiId?: number,
+  ): VehicleEntity[] {
     const existingVehiclesObj = existingVehicles.reduce((obj, vehicle) => {
       obj[vehicle.url] = vehicle;
       return obj;
@@ -212,7 +237,10 @@ export class StarWarsHelpersService {
       let setApiId = apiId ? apiId : ++i;
       const existingVehicle = existingVehiclesObj[vehicleData.url];
       if (existingVehicle) {
-        Object.assign(existingVehicle, this.mapToVehicleEntity(vehicleData, setApiId));
+        Object.assign(
+          existingVehicle,
+          this.mapToVehicleEntity(vehicleData, setApiId),
+        );
         return existingVehicle;
       } else {
         return this.mapToVehicleEntity(vehicleData, setApiId);
@@ -221,6 +249,4 @@ export class StarWarsHelpersService {
 
     return updatedVehicles;
   }
-
-
 }

@@ -6,7 +6,6 @@ export class IdParamDTO {
   id: string;
 }
 
-
 export class IdParamNumberDTO {
   @IsNotEmpty()
   @IsNumber()

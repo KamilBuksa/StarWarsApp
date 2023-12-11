@@ -8,11 +8,7 @@ export const initSwagger = (
 ) => {
   // if you are using setGlobalPrefix -> use it before initSwagger()
 
-
-  const swaggerUrls = [
-    `/${apiPrefix}/doc-json`,
-    `/${apiPrefix}/doc`,
-  ];
+  const swaggerUrls = [`/${apiPrefix}/doc-json`, `/${apiPrefix}/doc`];
 
   swaggerUrls.forEach((url) => {
     const httpAdapter = app.getHttpAdapter();
@@ -46,10 +42,7 @@ export const initSwagger = (
       }
       next();
     });
-  }
-  );
-
-
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Galactic Pioneers_ex ')

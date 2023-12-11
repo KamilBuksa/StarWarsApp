@@ -11,4 +11,4 @@ import { StarWarsApiService } from './services/star-wars-api.service';
   imports: [StarWarsEntityModule],
   exports: [],
 })
-export class StarWarsModule { }
+export class StarWarsModule {}

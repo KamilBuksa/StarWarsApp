@@ -29,8 +29,7 @@ export class StarWarsService {
     private readonly starshipRepository: StarshipRepositoryService,
     private readonly planetRepository: PlanetRepositoryService,
     private readonly starWarsApiService: StarWarsApiService,
-
-  ) { }
+  ) {}
 
   async getFilms(
     query: StarWarsFilmsQuery,
@@ -39,17 +38,19 @@ export class StarWarsService {
 
     const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
     const existingFilms = await this.filmRepository.find();
-    const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms(existingFilms, results);
+    const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms(
+      existingFilms,
+      results,
+    );
     await this.filmRepository.saveMany(updatedFilms);
 
     const response = await this.filmRepository.findAllPaginatedFilms(query);
 
-    const data = []
+    const data = [];
 
     for await (const film of response.data) {
       data.push(new FilmResponseDTO(film));
     }
-
 
     return {
       ...response,
@@ -57,9 +58,7 @@ export class StarWarsService {
     };
   }
 
-  async getFilmDetails(
-    id: number
-  ): Promise<FilmResponseDTO> {
+  async getFilmDetails(id: number): Promise<FilmResponseDTO> {
     let api = `https://swapi.dev/api/films/${id}/`;
 
     let result = await this.filmRepository.findOneByApiId(id);
@@ -67,7 +66,11 @@ export class StarWarsService {
       // ask api
       const filmApi = await this.starWarsApiService.fetchDataFromSwApi(api);
       if (filmApi) {
-        const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms([], [filmApi], id);
+        const updatedFilms = this.StarWarsHelpersService.updateOrCreateFilms(
+          [],
+          [filmApi],
+          id,
+        );
         [result] = await this.filmRepository.saveMany(updatedFilms);
       }
     }
@@ -82,10 +85,15 @@ export class StarWarsService {
     const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingSpecies = await this.speciesRepository.find();
-    const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies(existingSpecies, results);
+    const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies(
+      existingSpecies,
+      results,
+    );
     await this.speciesRepository.saveMany(updatedSpecies);
 
-    const response = await this.speciesRepository.findAllPaginatedSpecies(query);
+    const response = await this.speciesRepository.findAllPaginatedSpecies(
+      query,
+    );
 
     const data = [];
 
@@ -99,9 +107,7 @@ export class StarWarsService {
     };
   }
 
-  async getSpeciesDetails(
-    id: number
-  ): Promise<SpeciesResponseDTO> {
+  async getSpeciesDetails(id: number): Promise<SpeciesResponseDTO> {
     let api = `https://swapi.dev/api/species/${id}/`;
 
     let result = await this.speciesRepository.findOneByApiId(id);
@@ -109,13 +115,17 @@ export class StarWarsService {
       // ask api
       const speciesApi = await this.starWarsApiService.fetchDataFromSwApi(api);
       if (speciesApi) {
-        const updatedSpecies = this.StarWarsHelpersService.updateOrCreateSpecies([], [speciesApi], id);
+        const updatedSpecies =
+          this.StarWarsHelpersService.updateOrCreateSpecies(
+            [],
+            [speciesApi],
+            id,
+          );
         [result] = await this.speciesRepository.saveMany(updatedSpecies);
       }
     }
     return new SpeciesResponseDTO(result);
   }
-
 
   async getVehicles(
     query: StarWarsVehiclesQuery,
@@ -125,11 +135,15 @@ export class StarWarsService {
     const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingVehicles = await this.vehicleRepository.find();
-    const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles(existingVehicles, results);
+    const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles(
+      existingVehicles,
+      results,
+    );
     await this.vehicleRepository.saveMany(updatedVehicles);
 
-
-    const response = await this.vehicleRepository.findAllPaginatedVehicles(query);
+    const response = await this.vehicleRepository.findAllPaginatedVehicles(
+      query,
+    );
 
     const data = [];
 
@@ -141,11 +155,8 @@ export class StarWarsService {
       ...response,
       data,
     };
-
   }
-  async getVehicleDetails(
-    id: number
-  ): Promise<VehicleResponseDTO> {
+  async getVehicleDetails(id: number): Promise<VehicleResponseDTO> {
     let api = `https://swapi.dev/api/vehicles/${id}/`;
 
     let result = await this.vehicleRepository.findOneByApiId(id);
@@ -153,7 +164,12 @@ export class StarWarsService {
       // ask api
       const vehicleApi = await this.starWarsApiService.fetchDataFromSwApi(api);
       if (vehicleApi) {
-        const updatedVehicles = this.StarWarsHelpersService.updateOrCreateVehicles([], [vehicleApi], id);
+        const updatedVehicles =
+          this.StarWarsHelpersService.updateOrCreateVehicles(
+            [],
+            [vehicleApi],
+            id,
+          );
         [result] = await this.vehicleRepository.saveMany(updatedVehicles);
       }
     }
@@ -168,10 +184,16 @@ export class StarWarsService {
     const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingStarships = await this.starshipRepository.find();
-    const updatedStarships = this.StarWarsHelpersService.updateOrCreateStarships(existingStarships, results);
+    const updatedStarships =
+      this.StarWarsHelpersService.updateOrCreateStarships(
+        existingStarships,
+        results,
+      );
     await this.starshipRepository.saveMany(updatedStarships);
 
-    const response = await this.starshipRepository.findAllPaginatedStarships(query);
+    const response = await this.starshipRepository.findAllPaginatedStarships(
+      query,
+    );
 
     const data = [];
 
@@ -183,11 +205,8 @@ export class StarWarsService {
       ...response,
       data,
     };
-
   }
-  async getStarshipDetails(
-    id: number
-  ): Promise<StarshipResponseDTO> {
+  async getStarshipDetails(id: number): Promise<StarshipResponseDTO> {
     let api = `https://swapi.dev/api/starships/${id}/`;
 
     let result = await this.starshipRepository.findOneByApiId(id);
@@ -195,7 +214,12 @@ export class StarWarsService {
       // ask api
       const starshipApi = await this.starWarsApiService.fetchDataFromSwApi(api);
       if (starshipApi) {
-        const updatedStarships = this.StarWarsHelpersService.updateOrCreateStarships([], [starshipApi], id);
+        const updatedStarships =
+          this.StarWarsHelpersService.updateOrCreateStarships(
+            [],
+            [starshipApi],
+            id,
+          );
         [result] = await this.starshipRepository.saveMany(updatedStarships);
       }
     }
@@ -210,9 +234,11 @@ export class StarWarsService {
     const { results } = await this.starWarsApiService.fetchDataFromSwApi(api);
 
     const existingPlanets = await this.planetRepository.find();
-    const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets(existingPlanets, results);
+    const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets(
+      existingPlanets,
+      results,
+    );
     await this.planetRepository.saveMany(updatedPlanets);
-
 
     const response = await this.planetRepository.findAllPaginatedPlanets(query);
 
@@ -226,11 +252,8 @@ export class StarWarsService {
       ...response,
       data,
     };
-
   }
-  async getPlanetDetails(
-    id: number
-  ): Promise<PlanetResponseDTO> {
+  async getPlanetDetails(id: number): Promise<PlanetResponseDTO> {
     let api = `https://swapi.dev/api/planets/${id}/`;
 
     let result = await this.planetRepository.findOneByApiId(id);
@@ -238,31 +261,40 @@ export class StarWarsService {
       // ask api
       const planetApi = await this.starWarsApiService.fetchDataFromSwApi(api);
       if (planetApi) {
-        const updatedPlanets = this.StarWarsHelpersService.updateOrCreatePlanets([], [planetApi], id);
+        const updatedPlanets =
+          this.StarWarsHelpersService.updateOrCreatePlanets(
+            [],
+            [planetApi],
+            id,
+          );
         [result] = await this.planetRepository.saveMany(updatedPlanets);
       }
     }
     return new PlanetResponseDTO(result);
   }
 
-
   async getUniqueWordsAndMostFrequentCharacter(): Promise<ApiUniqueWordsResponse> {
-
     // Get the opening crawls from all films
     const films = await this.filmRepository.find();
     const openingCrawls = films.map((film) => film.openingCrawl);
 
     // Task A: Extract unique word pairs and count their occurrences
-    const uniqueWordPairsAndOccurrences = this.extractUniqueWordPairs(openingCrawls);
+    const uniqueWordPairsAndOccurrences =
+      this.extractUniqueWordPairs(openingCrawls);
 
     // Get the names of characters
 
-    const characterUrls = films.map(film => film.characters).flat();
+    const characterUrls = films.map((film) => film.characters).flat();
 
-    const namesOfFilteredPeople = await this.fetchAndFilterPeople(characterUrls);
+    const namesOfFilteredPeople = await this.fetchAndFilterPeople(
+      characterUrls,
+    );
 
     // Task B: Find the characters with the most occurrences
-    const mostFrequentCharacters = this.findMostFrequentCharacter(openingCrawls, namesOfFilteredPeople);
+    const mostFrequentCharacters = this.findMostFrequentCharacter(
+      openingCrawls,
+      namesOfFilteredPeople,
+    );
 
     return {
       mostFrequentCharacters,
@@ -270,7 +302,9 @@ export class StarWarsService {
     };
   }
 
-  private extractUniqueWordPairs(openingCrawls: string[]): Record<string, number> {
+  private extractUniqueWordPairs(
+    openingCrawls: string[],
+  ): Record<string, number> {
     const wordPairCounts: Record<string, number> = {};
 
     openingCrawls.forEach((crawl) => {
@@ -284,29 +318,36 @@ export class StarWarsService {
     return wordPairCounts;
   }
 
-
-
   async fetchAndFilterPeople(urls: string[]) {
     try {
       // Fetch data about all people from the API
-      const { results: allPeople } = await this.starWarsApiService.fetchDataFromSwApi("https://swapi.dev/api/people/");
+      const { results: allPeople } =
+        await this.starWarsApiService.fetchDataFromSwApi(
+          'https://swapi.dev/api/people/',
+        );
 
       // Filter only the people from the unique list of URLs
-      const filteredPeople = allPeople.filter(person => urls.includes(person.url));
+      const filteredPeople = allPeople.filter((person) =>
+        urls.includes(person.url),
+      );
 
       // Create a list of names of filtered people
-      const namesOfFilteredPeople = filteredPeople.map(person => person.name);
+      const namesOfFilteredPeople = filteredPeople.map((person) => person.name);
       console.log(namesOfFilteredPeople);
       return namesOfFilteredPeople;
     } catch (error) {
-      console.error('An error occurred while fetching data from the API:', error);
+      console.error(
+        'An error occurred while fetching data from the API:',
+        error,
+      );
       throw error;
     }
-  };
+  }
 
-
-
-  private findMostFrequentCharacter(openingCrawls: string[], namesOfFilteredPeople: string[]): Record<string, number> {
+  private findMostFrequentCharacter(
+    openingCrawls: string[],
+    namesOfFilteredPeople: string[],
+  ): Record<string, number> {
     const characterCounts: Record<string, number> = {};
 
     openingCrawls.forEach((crawl) => {
@@ -314,14 +355,12 @@ export class StarWarsService {
         const regex = new RegExp(`\\b${characterName}\\b`, 'gi');
         const characterMatches = crawl.match(regex);
         if (characterMatches) {
-          characterCounts[characterName] = (characterCounts[characterName] || 0) + characterMatches.length;
+          characterCounts[characterName] =
+            (characterCounts[characterName] || 0) + characterMatches.length;
         }
       });
     });
 
     return characterCounts;
   }
-
-
-
 }
