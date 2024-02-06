@@ -38,7 +38,7 @@ import { IdParamDTO, IdParamNumberDTO } from '../../auth/dtos/request/id.dto';
 @ApiTags('Star Wars')
 @Controller('/star-wars')
 export class StarWarsController {
-  constructor(private readonly _starWarsService: StarWarsService) {}
+  constructor(private readonly _starWarsService: StarWarsService) { }
 
   @ApiOperation({
     summary: 'Show list of films',
@@ -48,9 +48,9 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_FILMS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(FilmResponseDTO)
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
-  // @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/films')
   async getFilms(
     @Query() query: StarWarsFilmsQuery,
@@ -77,9 +77,9 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_SPECIES_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(SpeciesResponseDTO)
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
-  // @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/species')
   async getSpecies(
     @Query() query: StarWarsSpeciesQuery,
@@ -108,9 +108,9 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_VEHICLES_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(VehicleResponseDTO)
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
-  // @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/vehicles')
   async getVehicles(
     @Query() query: StarWarsVehiclesQuery,
@@ -139,9 +139,9 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_STARSHIPS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(StarshipResponseDTO)
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
-  // @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/starships')
   async getStarships(
     @Query() query: StarWarsStarshipsQuery,
@@ -170,9 +170,9 @@ export class StarWarsController {
   @CacheTTL(TTL_CONSTANTS.ONE_DAY)
   @CacheKey(CACHE_KEYS.GET_PLANETS_LIST_CACHE_KEY)
   @ApiSwaggerModel.ApiOkResponsePaginated(PlanetResponseDTO)
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
-  // @LanguageHeadersModel.LanguageHeadersGuardDecorator()
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @LanguageHeadersModel.LanguageHeadersGuardDecorator()
   @Get('/planets')
   async getPlanets(
     @Query() query: StarWarsPlanetsQuery,
@@ -196,8 +196,8 @@ export class StarWarsController {
     description:
       'This endpoint allows you to find unique word pairs and count their occurrences in text. Word pairs are separated by spaces or any number of control characters, and the result is a list of these pairs along with the count of their occurrences.',
   })
-  // @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
-  // @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
+  @Roles(USER_ROLE.USER, USER_ROLE.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard, AccessGuard)
   @Get('unique-word-pairs')
   async getUniqueWordsAndCharacterName(): Promise<ApiUniqueWordsResponse> {
     return await this._starWarsService.getUniqueWordsAndMostFrequentCharacter();
